@@ -1,0 +1,47 @@
+.hero-feature-container .hero-feature-wrapper {
+  max-width: unset;
+  padding: 0;
+}
+
+.hero-feature {
+  position: relative;
+  padding: 40px 24px;
+  min-height: 300px;
+}
+
+.hero-feature h1,
+.hero-feature h2,
+.hero-feature h3,
+.hero-feature h4,
+.hero-feature h5,
+.hero-feature h6,
+.hero-feature p {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--background-color);
+}
+
+.hero-feature.no-image * {
+  color: var(--text-color);
+}
+
+.hero-feature picture {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.hero-feature img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+@media (width >= 900px) {
+  .hero-feature {
+    padding: 40px 32px;
+  }
+}

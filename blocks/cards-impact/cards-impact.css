@@ -1,0 +1,27 @@
+.cards-impact > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  gap: 24px;
+}
+
+.cards-impact > ul > li {
+  border: 1px solid #dadada;
+  background-color: var(--background-color);
+}
+
+.cards-impact .cards-impact-card-body {
+  margin: 16px;
+}
+
+.cards-impact .cards-impact-card-image {
+  line-height: 0;
+}
+
+.cards-impact > ul > li img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}

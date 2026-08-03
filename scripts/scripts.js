@@ -205,7 +205,8 @@ async function loadLazy(doc) {
  */
 function loadDelayed() {
   import('./consent-check.js');
-  // load anything that can be postponed to the latest here
+  // third-party integrations (OneTrust consent CMP + Coveo search), postponed to the latest
+  import('./delayed.js');
 }
 
 async function loadPage() {

@@ -1,20 +1,117 @@
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  background-color: #1e1e1e;
+  color: rgb(255 255 255 / 96%);
+  font-size: 14px;
 }
 
-footer .footer > div {
+footer .footer {
   margin: auto;
-  max-width: 1200px;
-  padding: 40px 24px 24px;
+  max-width: 1312px;
+  padding: 40px 24px 30px;
 }
 
 footer .footer p {
   margin: 0;
 }
 
+footer .footer a {
+  color: rgb(255 255 255 / 96%);
+  text-decoration: none;
+}
+
+footer .footer-legal a {
+  color: #fff;
+}
+
+footer .footer a:hover {
+  text-decoration: underline;
+}
+
+/* --- primary link columns --- */
+footer .footer-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding-bottom: 30px;
+}
+
+footer .footer-link-column {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer .footer-link-column li {
+  margin: 0 0 5px;
+  line-height: 22px;
+}
+
+/* --- brand + social + legal band --- */
+footer .footer-brand {
+  border-top: 1px solid rgb(255 255 255 / 36%);
+  border-bottom: 1px solid rgb(255 255 255 / 36%);
+  padding: 30px 0 25px;
+}
+
+footer .footer-logo img {
+  height: 30px;
+  width: auto;
+}
+
+footer .footer-tagline {
+  font-size: 17px;
+  margin: 8px 0 0;
+}
+
+footer .footer-social {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  margin: 18px 0 10px;
+  padding: 0;
+}
+
+footer .footer-social img {
+  height: 24px;
+  width: 24px;
+}
+
+footer .footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  list-style: none;
+  margin: 18px 0 10px;
+  padding: 0;
+  font-weight: 500;
+}
+
+/* --- address / copyright band --- */
+footer .footer-meta {
+  padding-top: 20px;
+  color: rgb(255 255 255 / 80%);
+  line-height: 22px;
+}
+
+@media (width >= 600px) {
+  footer .footer-links {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+  footer .footer {
+    padding: 40px 64px 30px;
+  }
+
+  footer .footer-brand {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 24px;
+  }
+
+  footer .footer-legal {
+    grid-column: 1 / -1;
   }
 }

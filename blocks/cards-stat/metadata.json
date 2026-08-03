@@ -1,0 +1,42 @@
+{
+  "variantName": "cards-stat",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-03T18:22:26.756Z",
+  "sourceContext": {
+    "originUrl": "https://www.medtronic.com/en-us/index.html",
+    "originPage": "homepage Who We Are stats",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "compact",
+    "purpose": "stat-tiles",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "large number + label (per tile), no image",
+    "buttonCount": 0,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "numeric statistic tiles without icons",
+      "key-facts number bands"
+    ],
+    "notSuitableFor": [
+      "cards with images",
+      "icon+label link tiles"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-03T18:22:26.756Z",
+    "sectionsUsing": [
+      "who-we-are"
+    ]
+  }
+}

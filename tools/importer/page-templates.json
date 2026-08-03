@@ -1,0 +1,221 @@
+{
+  "metadata": {
+    "projectType": "doc"
+  },
+  "templates": [
+    {
+      "name": "homepage",
+      "urls": [
+        "https://www.medtronic.com/en-us/index.html"
+      ],
+      "representativeUrl": "https://www.medtronic.com/en-us/index.html",
+      "coverageGaps": [],
+      "description": "Medtronic corporate homepage with video hero, secondary promo panel, story card rail, who-we-are + stats, featured story band, impact + animated stats, careers, and investors sections.",
+      "blocks": [
+        {
+          "name": "hero-video",
+          "instances": [
+            "#Header-video > section.hero-jon",
+            ".hero-jon"
+          ]
+        },
+        {
+          "name": "cards-promo",
+          "instances": [
+            ".hero-main-content .migration:nth-of-type(2)",
+            "#Our-Impact .access-card"
+          ]
+        },
+        {
+          "name": "cards-rail",
+          "instances": [
+            "#scroller",
+            ".scroller"
+          ]
+        },
+        {
+          "name": "columns-media",
+          "instances": [
+            ".wrapper-who-we-are-section .who-we-are-section"
+          ]
+        },
+        {
+          "name": "cards-stat",
+          "instances": [
+            ".who-we-are-stats"
+          ]
+        },
+        {
+          "name": "hero-feature",
+          "instances": [
+            ".wrapper-cta-banner .cta-banner"
+          ]
+        },
+        {
+          "name": "hero-impact",
+          "instances": [
+            "#Our-Impact .our-impact-card"
+          ]
+        },
+        {
+          "name": "cards-impact",
+          "instances": [
+            "#Our-Impact .our-impact-stats"
+          ]
+        },
+        {
+          "name": "hero-careers",
+          "instances": [
+            ".wrapper-careers-section .careers-section"
+          ]
+        },
+        {
+          "name": "cards-tile",
+          "instances": [
+            ".careers-jobs",
+            ".investors-icons"
+          ]
+        },
+        {
+          "name": "section-who-we-are",
+          "instances": [
+            "div.migration:nth-of-type(4)"
+          ],
+          "section": "dark"
+        },
+        {
+          "name": "section-featured-story",
+          "instances": [
+            "div.migration:nth-of-type(5)"
+          ],
+          "section": "dark"
+        },
+        {
+          "name": "section-investors",
+          "instances": [
+            "#container-360f186c87"
+          ],
+          "section": "light"
+        }
+      ],
+      "sections": [
+        {
+          "id": "header",
+          "name": "Header",
+          "selector": "div.com-header-container",
+          "style": null,
+          "blocks": [
+            "header"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "hero-primary",
+          "name": "Primary video hero",
+          "selector": [
+            "#Header-video > section.hero-jon",
+            ".hero-jon"
+          ],
+          "style": null,
+          "blocks": [
+            "hero-video"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "hero-secondary",
+          "name": "Spark scholarships promo",
+          "selector": ".hero-main-content .migration:nth-of-type(2)",
+          "style": null,
+          "blocks": [
+            "cards-promo"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "innovation-rail",
+          "name": "Innovation in action",
+          "selector": "#News-Media",
+          "style": "light",
+          "blocks": [
+            "cards-rail"
+          ],
+          "defaultContent": [
+            "#News-Media .eyebrow",
+            "#News-Media h2.headline"
+          ]
+        },
+        {
+          "id": "who-we-are",
+          "name": "Where health meets high tech",
+          "selector": "div.migration:nth-of-type(4)",
+          "style": "dark",
+          "blocks": [
+            "columns-media",
+            "cards-stat"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "featured-story",
+          "name": "Featured story band",
+          "selector": "div.migration:nth-of-type(5)",
+          "style": "dark",
+          "blocks": [
+            "hero-feature"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "our-impact",
+          "name": "Our Impact",
+          "selector": "#Our-Impact",
+          "style": null,
+          "blocks": [
+            "hero-impact",
+            "cards-impact",
+            "cards-promo"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "careers",
+          "name": "Careers that change lives",
+          "selector": "div.migration:nth-of-type(7)",
+          "style": "dark",
+          "blocks": [
+            "hero-careers",
+            "cards-tile"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "investors",
+          "name": "Shareholders spotlight",
+          "selector": [
+            "#container-360f186c87",
+            "div.container.responsivegrid:nth-of-type(3)"
+          ],
+          "style": "light",
+          "blocks": [
+            "cards-tile"
+          ],
+          "defaultContent": [
+            ".investors-content .eyebrow",
+            ".investors-content h2"
+          ]
+        },
+        {
+          "id": "footer",
+          "name": "Footer",
+          "selector": "body > footer",
+          "style": "dark",
+          "blocks": [
+            "footer"
+          ],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}

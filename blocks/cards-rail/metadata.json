@@ -1,0 +1,42 @@
+{
+  "variantName": "cards-rail",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-03T18:22:26.756Z",
+  "sourceContext": {
+    "originUrl": "https://www.medtronic.com/en-us/index.html",
+    "originPage": "homepage Innovation in action",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "story-rail",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "image + category eyebrow + linked heading (per card)",
+    "buttonCount": 0,
+    "imageCount": 6
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "horizontally scrollable story/article rails",
+      "linked card carousels of news items"
+    ],
+    "notSuitableFor": [
+      "static 2-4 card grids",
+      "cards with body copy + explicit CTA buttons"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-03T18:22:26.756Z",
+    "sectionsUsing": [
+      "innovation-rail"
+    ]
+  }
+}

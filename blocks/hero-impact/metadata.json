@@ -1,0 +1,41 @@
+{
+  "variantName": "hero-impact",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-08-03T18:22:26.756Z",
+  "sourceContext": {
+    "originUrl": "https://www.medtronic.com/en-us/index.html",
+    "originPage": "homepage Our Impact intro",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "accent",
+    "density": "spacious",
+    "purpose": "intro-card",
+    "imagePattern": "noimg"
+  },
+  "contentPattern": {
+    "structure": "eyebrow + large headline + paragraph + 1 CTA on gradient card",
+    "buttonCount": 1,
+    "imageCount": 0
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "gradient/accent intro cards",
+      "section intro blocks with own background"
+    ],
+    "notSuitableFor": [
+      "plain-background intros (use default content + section-metadata)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-03T18:22:26.756Z",
+    "sectionsUsing": [
+      "our-impact"
+    ]
+  }
+}
