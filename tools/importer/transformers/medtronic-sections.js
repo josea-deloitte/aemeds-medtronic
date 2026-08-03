@@ -24,27 +24,6 @@ const TransformHook = {
   afterTransform: 'afterTransform',
 };
 
-/**
- * Resolve the first element matching a section's selector.
- * Accepts a string or an array of fallback selector strings.
- */
-function resolveSectionElement(root, selector) {
-  const candidates = Array.isArray(selector) ? selector : [selector];
-  for (let i = 0; i < candidates.length; i += 1) {
-    const sel = candidates[i];
-    if (typeof sel === 'string' && sel.trim()) {
-      let el = null;
-      try {
-        el = root.querySelector(sel);
-      } catch (e) {
-        el = null;
-      }
-      if (el) return el;
-    }
-  }
-  return null;
-}
-
 export default function transform(hookName, element, payload) {
   if (hookName !== TransformHook.afterTransform) return;
 
@@ -57,31 +36,71 @@ export default function transform(hookName, element, payload) {
 
   const doc = element.ownerDocument || document;
 
-  // Process sections in reverse so DOM insertions don't shift the positions
-  // of sections we have yet to process.
-  for (let i = sections.length - 1; i >= 0; i -= 1) {
-    const section = sections[i];
-    const sectionEl = resolveSectionElement(element, section.selector);
-    if (!sectionEl) {
-      // Selector did not resolve on this page; skip gracefully.
-      continue;
-    }
+  // At afterTransform time each parsed block is a <table> whose first cell holds
+  // the computed block name (e.g. "hero-video" → "Hero Video"), NOT a
+  // <div class="hero-video"> (that class only appears in the final rendered
+  // output). So we anchor on the block TABLES, matched by header text, and
+  // insert <hr>/Section-Metadata as their siblings.
+  const computeName = (str) => str
+    .replace(/-/g, ' ')
+    .replace(/\s(.)/g, (s) => s.toUpperCase())
+    .replace(/^(.)/g, (s) => s.toUpperCase());
 
-    // Section Metadata block for styled sections, placed at the end of the
-    // section's content (immediately after the section element).
-    if (section.style) {
+  const tables = [...element.querySelectorAll('table')];
+  const headerOf = (t) => {
+    const cell = t.querySelector('tr > td, tr > th');
+    return cell ? (cell.textContent || '').trim().toLowerCase() : '';
+  };
+  // Only the block tables we know about (ignore any nested/data tables).
+  const knownNames = new Set(['hero-video', 'cards-promo', 'cards-rail', 'columns-media',
+    'cards-stat', 'hero-feature', 'hero-impact', 'cards-impact', 'hero-careers', 'cards-tile']
+    .map((n) => computeName(n).toLowerCase()));
+  const blockTables = tables
+    .filter((t) => knownNames.has(headerOf(t)))
+    .map((t) => ({ el: t, name: headerOf(t) }));
+
+  // Resolve each section's anchor (its first content block) with a FORWARD-ONLY
+  // cursor, so blocks that appear in two sections (cards-promo, cards-tile) are
+  // consumed once each, in document order.
+  const resolved = [];
+  let cursor = 0;
+  for (let i = 0; i < sections.length; i += 1) {
+    const section = sections[i];
+    const blockNames = Array.isArray(section.blocks) ? section.blocks : [];
+    const contentBlocks = blockNames.filter((b) => b !== 'header' && b !== 'footer');
+    if (contentBlocks.length === 0) continue;
+    const firstName = computeName(contentBlocks[0]).toLowerCase();
+    let anchorIdx = -1;
+    for (let j = cursor; j < blockTables.length; j += 1) {
+      if (blockTables[j].name === firstName) { anchorIdx = j; break; }
+    }
+    if (anchorIdx === -1) continue;
+    cursor = anchorIdx + 1;
+    resolved.push({ style: section.style, anchorIdx });
+  }
+
+  // Insert <hr>/Section-Metadata as SIBLINGS of the block tables (all block
+  // tables share one wrapper, so sibling insertion preserves document order and
+  // survives the markdown round-trip). EDS builds a new section at each <hr>.
+  // Apply in reverse so insertions don't disturb earlier anchors.
+  for (let i = resolved.length - 1; i >= 0; i -= 1) {
+    const { style, anchorIdx } = resolved[i];
+    const anchor = blockTables[anchorIdx].el;
+    // Section Metadata (styled sections): after this section's LAST block table
+    // (the one just before the next section's anchor), else the last block.
+    if (style) {
       const metadataBlock = WebImporter.Blocks.createBlock(doc, {
         name: 'Section Metadata',
-        cells: { style: section.style },
+        cells: { style },
       });
-      sectionEl.after(metadataBlock);
+      const next = resolved[i + 1];
+      const lastIdx = next ? next.anchorIdx - 1 : blockTables.length - 1;
+      const lastEl = lastIdx >= 0 ? blockTables[lastIdx].el : anchor;
+      lastEl.after(metadataBlock);
     }
-
-    // Section break before every section except the first, and only when
-    // there is content before it in the document.
-    if (i > 0 && sectionEl.previousElementSibling) {
-      const hr = doc.createElement('hr');
-      sectionEl.before(hr);
+    // Section break before every section except the first.
+    if (i > 0) {
+      anchor.before(doc.createElement('hr'));
     }
   }
 }

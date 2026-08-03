@@ -61,5 +61,18 @@ export default function transform(hookName, element, payload) {
     WebImporter.DOMUtils.remove(element, [
       'iframe',
     ]);
+
+    // --- Stray placeholder anchors ---
+    // The source emits a leftover <a href="">contactUs</a> widget outside the
+    // investors container. Remove anchors with an empty/hash href (and their
+    // wrapping <p> if it becomes empty). Never touches mp4 video links.
+    element.querySelectorAll('a').forEach((a) => {
+      const href = (a.getAttribute('href') || '').trim();
+      if (href === '' || href === '#') {
+        const p = a.closest('p');
+        a.remove();
+        if (p && !p.textContent.trim() && !p.querySelector('img, a, picture')) p.remove();
+      }
+    });
   }
 }

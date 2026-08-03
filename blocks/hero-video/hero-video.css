@@ -5,43 +5,88 @@
 
 .hero-video {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  display: flex;
+  align-items: center;
+  min-height: 520px;
+  padding: 48px 24px;
+  overflow: hidden;
+  color: #fff;
+  background: linear-gradient(120deg, #170f5f 0%, #1010ab 100%);
+}
+
+/* background video cell fills the block behind the content */
+.hero-video .hero-video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-video .hero-video-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* content cell overlays the video */
+.hero-video > div:not(.hero-video-bg) {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero-video h1,
 .hero-video h2,
 .hero-video h3,
-.hero-video h4,
-.hero-video h5,
-.hero-video h6,
 .hero-video p {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
+  color: #fff;
 }
 
-.hero-video.no-image * {
-  color: var(--text-color);
+.hero-video h2 {
+  font-size: var(--heading-font-size-xl);
+  line-height: 1.1;
+  margin: 8px 0 16px;
 }
 
-.hero-video picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+/* eyebrow */
+.hero-video > div:not(.hero-video-bg) > div > p:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--body-font-size-s);
+  font-weight: 700;
+  margin: 0;
 }
 
-.hero-video img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+/* foreground media image — hidden on the video hero (video is the visual) */
+.hero-video.has-video picture {
+  display: none;
+}
+
+/* CTA link styled as a button */
+.hero-video a:any-link {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 12px 28px;
+  background: #fff;
+  color: #1010ab;
+  border-radius: 24px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero-video a:any-link:hover {
+  background: rgb(255 255 255 / 90%);
+}
+
+/* fallback when there is no video/image background */
+.hero-video.no-image {
+  background: linear-gradient(120deg, #170f5f 0%, #1010ab 100%);
 }
 
 @media (width >= 900px) {
   .hero-video {
-    padding: 40px 32px;
+    padding: 64px 32px;
+    min-height: 600px;
   }
 }
