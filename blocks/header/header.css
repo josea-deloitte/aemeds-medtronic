@@ -32,7 +32,8 @@ header nav[aria-expanded='true'] {
 }
 
 @media (width >= 900px) {
-  header nav {
+  header nav,
+  header nav[aria-expanded='true'] {
     display: grid;
     grid-template:
       'brand tools' auto
@@ -41,12 +42,9 @@ header nav[aria-expanded='true'] {
     gap: 14px 32px;
     max-width: 1312px;
     height: auto;
-    padding: 18px 32px 12px;
-  }
-
-  header nav[aria-expanded='true'] {
     min-height: 0;
     overflow: visible;
+    padding: 18px 32px 12px;
   }
 }
 
