@@ -114,12 +114,9 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  * the nav fragment; the control shell is built here.
  * @param {Element} navTools the tools section element
  */
-function decorateAudienceSelector(navTools) {
+function buildAudienceSelect(navTools) {
   const list = navTools.querySelector('ul');
-  if (!list) return;
-  const options = [...list.querySelectorAll('li')].map((li) => li.textContent.trim());
-  if (!options.length) return;
-
+  const options = list ? [...list.querySelectorAll('li')].map((li) => li.textContent.trim()) : [];
   const select = document.createElement('select');
   select.className = 'nav-audience';
   select.setAttribute('aria-label', 'Search within');
@@ -133,30 +130,49 @@ function decorateAudienceSelector(navTools) {
     option.value = opt.toLowerCase().replace(/\s+/g, '-');
     select.append(option);
   });
-  list.replaceWith(select);
+  if (list) list.remove();
+  return select;
 }
 
 /**
- * Replaces the ":search:" icon placeholder with a search trigger button.
- * The actual search experience (Coveo) is loaded lazily via delayed.js and
- * listens for the 'search:open' event dispatched here.
+ * Builds the header search box matching the source: an "audience" select, a
+ * text input, and a submit button, grouped as one rounded control. Submitting
+ * (or focusing) lazily loads the real Coveo search via the 'search:open' event
+ * that delayed.js listens for.
  * @param {Element} navTools the tools section element
  */
 function decorateSearch(navTools) {
   const searchIcon = navTools.querySelector('.icon-search');
-  const host = searchIcon ? searchIcon.closest('p') : null;
-  const target = host || searchIcon;
-  if (!target) return;
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'nav-search';
-  button.setAttribute('aria-label', 'Search Medtronic');
-  button.innerHTML = '<span class="nav-search-icon"></span>';
-  button.addEventListener('click', () => {
-    window.dispatchEvent(new CustomEvent('search:open'));
-    document.body.classList.toggle('search-open');
-  });
-  target.replaceWith(button);
+  const placeholderHost = searchIcon ? (searchIcon.closest('p') || searchIcon) : null;
+
+  const form = document.createElement('form');
+  form.className = 'nav-search';
+  form.setAttribute('role', 'search');
+  form.append(buildAudienceSelect(navTools));
+
+  const input = document.createElement('input');
+  input.type = 'search';
+  input.className = 'nav-search-input';
+  input.setAttribute('aria-label', 'Search Medtronic');
+  input.placeholder = 'Search Medtronic';
+  form.append(input);
+
+  const submit = document.createElement('button');
+  submit.type = 'submit';
+  submit.className = 'nav-search-submit';
+  submit.setAttribute('aria-label', 'Search Medtronic');
+  submit.innerHTML = '<span class="nav-search-icon"></span>';
+  form.append(submit);
+
+  const openSearch = () => {
+    window.dispatchEvent(new CustomEvent('search:open', { detail: { query: input.value } }));
+    document.body.classList.add('search-open');
+  };
+  form.addEventListener('submit', (e) => { e.preventDefault(); openSearch(); });
+  input.addEventListener('focus', () => window.dispatchEvent(new CustomEvent('search:prefetch')), { once: true });
+
+  if (placeholderHost) placeholderHost.replaceWith(form);
+  else navTools.append(form);
 }
 
 /**
@@ -205,7 +221,6 @@ export default async function decorate(block) {
   // tools section: audience selector + search trigger + utility link
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
-    decorateAudienceSelector(navTools);
     decorateSearch(navTools);
   }
 

@@ -1,10 +1,10 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background: linear-gradient(90deg, #170f5f 0%, #1010ab 60%, #170f5f 100%);
+  background: linear-gradient(180deg, rgb(10 8 40 / 85%) 0%, rgb(10 8 40 / 0%) 100%);
   color: #fff;
   width: 100%;
   z-index: 2;
-  position: fixed;
+  position: absolute;
 }
 
 header nav {
@@ -32,16 +32,16 @@ header nav[aria-expanded='true'] {
 }
 
 @media (width >= 900px) {
-  header .nav-wrapper {
-    position: relative;
-  }
-
   header nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 0 32px;
-    max-width: 1264px;
-    padding: 0 32px;
+    display: grid;
+    grid-template:
+      'brand tools' auto
+      'sections sections' auto / auto 1fr;
+    align-items: center;
+    gap: 14px 32px;
+    max-width: 1312px;
+    height: auto;
+    padding: 18px 32px 12px;
   }
 
   header nav[aria-expanded='true'] {
@@ -273,41 +273,65 @@ header nav .nav-tools {
   grid-area: tools;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
-/* --- Medtronic brand theme --- */
+/* --- Search box (audience select + input + submit) as one rounded control --- */
+header nav .nav-tools .nav-search {
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  max-width: 840px;
+  height: 42px;
+  background: rgb(255 255 255 / 96%);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
 header nav .nav-tools .nav-audience {
   appearance: none;
+  border: 0;
   background: transparent;
-  color: #fff;
-  border: 1px solid rgb(255 255 255 / 50%);
-  border-radius: 4px;
-  padding: 6px 28px 6px 10px;
+  color: #1010eb;
+  font-weight: 700;
+  padding: 0 30px 0 20px;
   font-size: var(--body-font-size-xs);
   cursor: pointer;
+  border-right: 1px solid rgb(0 0 0 / 12%);
 }
 
 header nav .nav-tools .nav-audience option {
   color: #1e1e1e;
 }
 
-header nav .nav-tools .nav-search {
+header nav .nav-tools .nav-search-input {
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  padding: 0 16px;
+  font-size: var(--body-font-size-s);
+  color: #1e1e1e;
+  min-width: 0;
+}
+
+header nav .nav-tools .nav-search-input:focus {
+  outline: none;
+}
+
+header nav .nav-tools .nav-search-submit {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  padding: 0;
+  width: 48px;
   border: 0;
-  border-radius: 50%;
-  background: transparent;
+  border-radius: 0;
+  background: #1010eb;
   color: #fff;
   cursor: pointer;
 }
 
-header nav .nav-tools .nav-search:hover {
-  background: rgb(255 255 255 / 15%);
+header nav .nav-tools .nav-search-submit:hover {
+  background: #0b0bc0;
 }
 
 header nav .nav-tools .nav-search-icon {
@@ -335,4 +359,17 @@ header nav .nav-tools a:any-link {
   color: #fff;
   font-size: var(--body-font-size-xs);
   white-space: nowrap;
+}
+
+/* On mobile the search box drops into the drawer and stacks. */
+@media (width < 900px) {
+  header nav .nav-tools {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  header nav .nav-tools .nav-search {
+    flex-basis: 100%;
+    max-width: none;
+  }
 }

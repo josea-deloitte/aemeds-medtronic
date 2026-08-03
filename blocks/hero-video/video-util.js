@@ -1,19 +1,30 @@
 /**
- * Shared helper: convert an <a href="*.mp4"> carrier anchor (the EDS document-authoring
- * pattern for videos) into a real autoplay/muted/loop background <video> element.
+ * Shared helper: convert an EDS video carrier link into a real autoplay/muted/loop
+ * background <video> element.
  *
- * Authors reference a video by linking to its .mp4 URL. A poster image (if present as a
- * sibling <picture>/<img> in the same cell) is used as the video poster so there is a
- * meaningful LCP frame before the video is ready.
+ * Authors reference a video by linking to its .mp4 URL, so the visible link text is
+ * the .mp4 URL. NOTE: EDS/DA sanitises the anchor's `href` (".mp4" becomes "-mp4"),
+ * so we must read the real URL from the link TEXT, not the href. A poster image (a
+ * sibling <picture>/<img>) is used as the video poster for a meaningful first frame.
  *
  * @param {Element} scope Element to search within (a block or a column cell)
- * @returns {HTMLVideoElement|null} the created video, or null if no mp4 anchor found
+ * @returns {HTMLVideoElement|null} the created video, or null if no mp4 link found
  */
 export default function decorateVideo(scope) {
-  const anchor = scope.querySelector('a[href*=".mp4"]');
+  // Find the carrier anchor: either its href or its text points at an .mp4.
+  const anchor = [...scope.querySelectorAll('a')].find((a) => {
+    const href = a.getAttribute('href') || '';
+    const text = (a.textContent || '').trim();
+    return /\.mp4(\?|$)/i.test(href) || /\.mp4(\?|$)/i.test(text);
+  });
   if (!anchor) return null;
 
-  const src = anchor.getAttribute('href');
+  // Prefer the text URL (real .mp4); fall back to href if it still has .mp4.
+  const text = (anchor.textContent || '').trim();
+  const href = anchor.getAttribute('href') || '';
+  const src = /\.mp4(\?|$)/i.test(text) ? text : href;
+  if (!/^https?:\/\//i.test(src)) return null;
+
   const video = document.createElement('video');
   video.setAttribute('autoplay', '');
   video.muted = true;
@@ -33,13 +44,17 @@ export default function decorateVideo(scope) {
   source.setAttribute('type', 'video/mp4');
   video.appendChild(source);
 
-  // Replace the carrier anchor (and drop the now-redundant poster picture) with the video.
+  // Replace the carrier anchor's wrapper (usually a <p>) with the video, and
+  // drop a leftover poster <picture> in the same cell.
   const cell = anchor.closest('div') || anchor.parentElement;
-  anchor.replaceWith(video);
-  // Remove a leftover poster <picture> if it lived in a separate wrapper in the same cell.
+  const wrapper = anchor.closest('p') || anchor;
+  wrapper.replaceWith(video);
   if (cell) {
     const strayPicture = cell.querySelector('picture');
-    if (strayPicture && !video.contains(strayPicture)) strayPicture.remove();
+    if (strayPicture && !video.contains(strayPicture)) {
+      const pWrap = strayPicture.closest('p') || strayPicture;
+      pWrap.remove();
+    }
   }
 
   // Lazily start playback once in view to avoid autoplay cost before LCP.
