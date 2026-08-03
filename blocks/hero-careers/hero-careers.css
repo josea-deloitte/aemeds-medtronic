@@ -5,33 +5,19 @@
 
 .hero-careers {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  display: flex;
+  align-items: center;
+  min-height: 420px;
+  padding: 48px 24px;
+  overflow: hidden;
+  color: #fff;
 }
 
-.hero-careers h1,
-.hero-careers h2,
-.hero-careers h3,
-.hero-careers h4,
-.hero-careers h5,
-.hero-careers h6,
-.hero-careers p {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero-careers.no-image * {
-  color: var(--text-color);
-}
-
+/* background photo fills the block */
 .hero-careers picture {
   position: absolute;
-  z-index: -1;
   inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+  z-index: 0;
 }
 
 .hero-careers img {
@@ -40,8 +26,72 @@
   height: 100%;
 }
 
+/* dark scrim for text legibility over the photo */
+.hero-careers::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(90deg, rgb(0 0 0 / 65%) 0%, rgb(0 0 0 / 25%) 100%);
+}
+
+.hero-careers > div {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-careers h1,
+.hero-careers h2,
+.hero-careers h3,
+.hero-careers p {
+  color: #fff;
+}
+
+.hero-careers h2 {
+  font-size: var(--heading-font-size-xl);
+  line-height: 1.1;
+  margin: 8px 0 12px;
+}
+
+/* eyebrow */
+.hero-careers > div > div > p:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  font-size: var(--body-font-size-s);
+  margin: 0;
+}
+
+/* primary CTA as a pill, secondary links inline */
+.hero-careers a:any-link {
+  color: #fff;
+  font-weight: 700;
+}
+
+.hero-careers p:nth-of-type(2) a {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 12px 28px;
+  background: #fff;
+  color: #1010ab;
+  border-radius: 24px;
+  text-decoration: none;
+}
+
+.hero-careers.no-image {
+  background: linear-gradient(120deg, #170f5f 0%, #1010ab 100%);
+}
+
+.hero-careers.no-image::after {
+  display: none;
+}
+
 @media (width >= 900px) {
   .hero-careers {
-    padding: 40px 32px;
+    padding: 64px 32px;
+    min-height: 460px;
   }
 }
