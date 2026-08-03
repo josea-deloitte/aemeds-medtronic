@@ -55,12 +55,12 @@ function focusNavSection() {
 
 /**
  * Toggles all nav sections
- * @param {Element} sections The container element
+ * @param {Element} sections The container element (ul.nav-sections)
  * @param {Boolean} expanded Whether the element should be expanded or collapsed
  */
 function toggleAllNavSections(sections, expanded = false) {
   if (!sections) return;
-  sections.querySelectorAll('.nav-sections .default-content-wrapper > ul > li').forEach((section) => {
+  sections.querySelectorAll(':scope > li').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
   });
 }
@@ -73,11 +73,11 @@ function toggleAllNavSections(sections, expanded = false) {
  */
 function toggleMenu(nav, navSections, forceExpanded = null) {
   const expanded = forceExpanded !== null ? !forceExpanded : nav.getAttribute('aria-expanded') === 'true';
-  const button = nav.querySelector('.nav-hamburger button');
+  const button = nav.querySelector('button.nav-hamburger');
   document.body.style.overflowY = (expanded || isDesktop.matches) ? '' : 'hidden';
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(navSections, expanded || isDesktop.matches ? 'false' : 'true');
-  button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
+  if (button) button.setAttribute('aria-label', expanded ? 'Open navigation' : 'Close navigation');
   // enable nav dropdown keyboard accessibility
   if (navSections) {
     const navDrops = navSections.querySelectorAll('.nav-drop');
@@ -178,6 +178,20 @@ function decorateSearch(navTools) {
 /**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
+ *
+ * Produces a flat, semantic two-row structure that mirrors the original AEM
+ * header (utility row: menu + logo + search + tools; primary-nav row) without
+ * any of the source's aem-GridColumn / cmp-* wrapper divs:
+ *
+ *   <nav id="nav" aria-label="Main navigation">
+ *     <div class="nav-utility">
+ *       <button class="nav-hamburger">…</button>
+ *       <a class="nav-brand" href="/en-us/index"><img …></a>
+ *       <form class="nav-search" role="search">…</form>
+ *       <div class="nav-tools">…</div>
+ *     </div>
+ *     <ul class="nav-sections">…</ul>
+ *   </nav>
  */
 export default async function decorate(block) {
   // load nav as fragment
@@ -185,55 +199,72 @@ export default async function decorate(block) {
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
-  // decorate nav DOM
+  // The fragment yields three source blocks: [0] brand, [1] primary nav, [2] tools.
+  const sourceSections = [...fragment.children];
   block.textContent = '';
+
   const nav = document.createElement('nav');
   nav.id = 'nav';
-  while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
+  nav.setAttribute('aria-label', 'Main navigation');
 
-  const classes = ['brand', 'sections', 'tools'];
-  classes.forEach((c, i) => {
-    const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
-  });
+  // --- Row 1: utility bar ---------------------------------------------------
+  const utility = document.createElement('div');
+  utility.className = 'nav-utility';
 
-  const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand && navBrand.querySelector('.button');
-  if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+  // Hamburger drawer toggle (semantic <button>, no wrapper div).
+  const hamburger = document.createElement('button');
+  hamburger.type = 'button';
+  hamburger.className = 'nav-hamburger';
+  hamburger.setAttribute('aria-controls', 'nav');
+  hamburger.setAttribute('aria-label', 'Open navigation');
+  hamburger.innerHTML = '<span class="nav-hamburger-icon"></span>';
+
+  // Brand: unwrap the fragment's logo link into a single <a class="nav-brand">.
+  const brand = document.createElement('a');
+  brand.className = 'nav-brand';
+  const brandSource = sourceSections[0] && sourceSections[0].querySelector('a');
+  if (brandSource) {
+    brand.href = brandSource.getAttribute('href') || '/en-us/index';
+    brand.setAttribute('aria-label', 'Medtronic');
+    while (brandSource.firstChild) brand.append(brandSource.firstChild);
   }
 
-  const navSections = nav.querySelector('.nav-sections');
-  if (navSections) {
-    navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
-      if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
+  // Tools (search + education link + region) come from source section [2].
+  const navTools = document.createElement('div');
+  navTools.className = 'nav-tools';
+  const toolsSource = sourceSections[2];
+  if (toolsSource) {
+    while (toolsSource.firstElementChild) navTools.append(toolsSource.firstElementChild);
+  }
+
+  utility.append(hamburger, brand, navTools);
+  nav.append(utility);
+
+  // --- Row 2: primary navigation (semantic <ul>) ----------------------------
+  const navList = sourceSections[1] && sourceSections[1].querySelector('ul');
+  let navSections = null;
+  if (navList) {
+    navList.classList.add('nav-sections');
+    navList.querySelectorAll(':scope > li').forEach((li) => {
+      if (li.querySelector('ul')) li.classList.add('nav-drop');
+      li.addEventListener('click', () => {
         if (isDesktop.matches) {
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          const expanded = li.getAttribute('aria-expanded') === 'true';
+          toggleAllNavSections(navList);
+          li.setAttribute('aria-expanded', expanded ? 'false' : 'true');
         }
       });
     });
+    nav.append(navList);
+    navSections = navList;
   }
 
-  // tools section: audience selector + search trigger + utility link
-  const navTools = nav.querySelector('.nav-tools');
-  if (navTools) {
-    decorateSearch(navTools);
-  }
+  // Build the search box from the tools content (audience select + input + submit).
+  decorateSearch(navTools);
 
-  // hamburger for mobile
-  const hamburger = document.createElement('div');
-  hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
-    </button>`;
+  // Wire the hamburger and initial expanded state.
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
