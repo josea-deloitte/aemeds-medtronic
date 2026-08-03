@@ -1,1 +1,35 @@
 /* add global styles that can be loaded post LCP here */
+
+/* Site search overlay (Coveo Atomic), lazy-loaded via delayed.js */
+.site-search-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgb(0 0 0 / 60%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.site-search-panel .site-search-inner {
+  position: relative;
+  width: min(900px, 92vw);
+  margin-top: 12vh;
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.site-search-panel .site-search-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}

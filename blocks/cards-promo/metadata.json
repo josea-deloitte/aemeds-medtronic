@@ -1,0 +1,43 @@
+{
+  "variantName": "cards-promo",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-03T18:22:26.756Z",
+  "sourceContext": {
+    "originUrl": "https://www.medtronic.com/en-us/index.html",
+    "originPage": "homepage secondary promo + impact promo",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "wide",
+    "purpose": "promo-card",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "image + eyebrow + title + CTA",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "single promotional cards (image + eyebrow + title + CTA)",
+      "feature call-outs"
+    ],
+    "notSuitableFor": [
+      "numeric stat tiles",
+      "icon-only link tiles"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-08-03T18:22:26.756Z",
+    "sectionsUsing": [
+      "hero-secondary",
+      "our-impact"
+    ]
+  }
+}

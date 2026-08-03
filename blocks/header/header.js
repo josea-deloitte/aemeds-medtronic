@@ -109,6 +109,57 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 /**
+ * Builds the audience/region selector from the first <ul> in the tools section.
+ * The list items (Healthcare professionals / Patients / Career seekers) come from
+ * the nav fragment; the control shell is built here.
+ * @param {Element} navTools the tools section element
+ */
+function decorateAudienceSelector(navTools) {
+  const list = navTools.querySelector('ul');
+  if (!list) return;
+  const options = [...list.querySelectorAll('li')].map((li) => li.textContent.trim());
+  if (!options.length) return;
+
+  const select = document.createElement('select');
+  select.className = 'nav-audience';
+  select.setAttribute('aria-label', 'Search within');
+  const placeholder = document.createElement('option');
+  placeholder.textContent = 'Search within';
+  placeholder.value = '';
+  select.append(placeholder);
+  options.forEach((opt) => {
+    const option = document.createElement('option');
+    option.textContent = opt;
+    option.value = opt.toLowerCase().replace(/\s+/g, '-');
+    select.append(option);
+  });
+  list.replaceWith(select);
+}
+
+/**
+ * Replaces the ":search:" icon placeholder with a search trigger button.
+ * The actual search experience (Coveo) is loaded lazily via delayed.js and
+ * listens for the 'search:open' event dispatched here.
+ * @param {Element} navTools the tools section element
+ */
+function decorateSearch(navTools) {
+  const searchIcon = navTools.querySelector('.icon-search');
+  const host = searchIcon ? searchIcon.closest('p') : null;
+  const target = host || searchIcon;
+  if (!target) return;
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'nav-search';
+  button.setAttribute('aria-label', 'Search Medtronic');
+  button.innerHTML = '<span class="nav-search-icon"></span>';
+  button.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('search:open'));
+    document.body.classList.toggle('search-open');
+  });
+  target.replaceWith(button);
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  */
@@ -131,7 +182,7 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand && navBrand.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
@@ -149,6 +200,13 @@ export default async function decorate(block) {
         }
       });
     });
+  }
+
+  // tools section: audience selector + search trigger + utility link
+  const navTools = nav.querySelector('.nav-tools');
+  if (navTools) {
+    decorateAudienceSelector(navTools);
+    decorateSearch(navTools);
   }
 
   // hamburger for mobile

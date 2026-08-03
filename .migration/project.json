@@ -1,0 +1,10 @@
+{
+  "type": "doc",
+  "sites": {
+    "aemeds-medtronic": {
+      "previewOrg": "josea-deloitte",
+      "previewSite": "aemeds-medtronic",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+    }
+  }
+}

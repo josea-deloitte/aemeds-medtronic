@@ -1,6 +1,7 @@
 /* header and nav layout */
 header .nav-wrapper {
-  background-color: var(--background-color);
+  background: linear-gradient(90deg, #170f5f 0%, #1010ab 60%, #170f5f 100%);
+  color: #fff;
   width: 100%;
   z-index: 2;
   position: fixed;
@@ -151,6 +152,7 @@ header .nav-brand {
 header nav .nav-brand img {
   width: 128px;
   height: auto;
+  filter: brightness(0) invert(1);
 }
 
 /* sections */
@@ -269,4 +271,68 @@ header nav .nav-sections ul > li > ul > li {
 /* tools */
 header nav .nav-tools {
   grid-area: tools;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* --- Medtronic brand theme --- */
+header nav .nav-tools .nav-audience {
+  appearance: none;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 50%);
+  border-radius: 4px;
+  padding: 6px 28px 6px 10px;
+  font-size: var(--body-font-size-xs);
+  cursor: pointer;
+}
+
+header nav .nav-tools .nav-audience option {
+  color: #1e1e1e;
+}
+
+header nav .nav-tools .nav-search {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+header nav .nav-tools .nav-search:hover {
+  background: rgb(255 255 255 / 15%);
+}
+
+header nav .nav-tools .nav-search-icon {
+  box-sizing: border-box;
+  display: block;
+  width: 15px;
+  height: 15px;
+  border: 2px solid currentcolor;
+  border-radius: 50%;
+  position: relative;
+}
+
+header nav .nav-tools .nav-search-icon::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  bottom: -4px;
+  width: 7px;
+  height: 2px;
+  background: currentcolor;
+  transform: rotate(45deg);
+}
+
+header nav .nav-tools a:any-link {
+  color: #fff;
+  font-size: var(--body-font-size-xs);
+  white-space: nowrap;
 }

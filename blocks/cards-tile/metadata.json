@@ -1,0 +1,43 @@
+{
+  "variantName": "cards-tile",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-03T18:22:26.756Z",
+  "sourceContext": {
+    "originUrl": "https://www.medtronic.com/en-us/index.html",
+    "originPage": "homepage Careers job tiles + Investors icon tiles",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "mixed",
+    "density": "compact",
+    "purpose": "icon-link-tile",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "icon/image + label, whole tile linked",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "compact icon+label linked tiles",
+      "category/quick-link tiles"
+    ],
+    "notSuitableFor": [
+      "story cards with long copy",
+      "numeric stat tiles"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-08-03T18:22:26.756Z",
+    "sectionsUsing": [
+      "careers",
+      "investors"
+    ]
+  }
+}

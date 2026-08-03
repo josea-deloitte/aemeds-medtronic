@@ -1,0 +1,42 @@
+{
+  "variantName": "columns-media",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-08-03T18:22:26.756Z",
+  "sourceContext": {
+    "originUrl": "https://www.medtronic.com/en-us/index.html",
+    "originPage": "homepage Who We Are",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "wide",
+    "purpose": "text-media-split",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "text column + media/video column side by side",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "text + media (video/image) side-by-side layouts",
+      "two-column intro + visual"
+    ],
+    "notSuitableFor": [
+      "repeating item grids (use cards)",
+      "single-column content"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-03T18:22:26.756Z",
+    "sectionsUsing": [
+      "who-we-are"
+    ]
+  }
+}

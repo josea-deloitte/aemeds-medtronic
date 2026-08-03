@@ -1,0 +1,42 @@
+{
+  "variantName": "hero-careers",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-08-03T18:22:26.756Z",
+  "sourceContext": {
+    "originUrl": "https://www.medtronic.com/en-us/index.html",
+    "originPage": "homepage Careers",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "spacious",
+    "purpose": "text-over-image",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "eyebrow + H2 + paragraph + primary CTA + 2 secondary links over full-bleed photo",
+    "buttonCount": 3,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "text/CTA clusters over full-bleed background photos",
+      "careers/recruitment banners"
+    ],
+    "notSuitableFor": [
+      "content that needs a light background",
+      "grids of items"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-03T18:22:26.756Z",
+    "sectionsUsing": [
+      "careers"
+    ]
+  }
+}
