@@ -48,33 +48,33 @@ export default function parse(element, { document }) {
     leftCell.push(link);
   }
 
-  // --- Right column: background video (preserve sources + poster) ---
+  // --- Right column: background video preserved as a link whose TEXT is the mp4 URL
+  //     (EDS video convention; an empty <a href="x.mp4"></a> is stripped on render).
+  //     blocks/columns-media decorates it into a real <video>; the GIF is the poster. ---
   const rightCell = [];
   const srcVideo = right ? right.querySelector('video') : null;
   const posterImg = right ? right.querySelector('img.background-image-middle, img') : null;
   if (srcVideo) {
-    const video = document.createElement('video');
-    video.setAttribute('autoplay', '');
-    video.setAttribute('muted', '');
-    video.setAttribute('loop', '');
-    video.setAttribute('playsinline', '');
-    // Use the animated GIF fallback as the poster if present.
-    if (posterImg && posterImg.getAttribute('src')) {
-      video.setAttribute('poster', posterImg.getAttribute('src'));
-    }
-    Array.from(srcVideo.querySelectorAll('source'))
+    const mp4 = Array.from(srcVideo.querySelectorAll('source'))
       .map((s) => s.getAttribute('src'))
-      .filter((s) => s && s.trim())
-      .forEach((src) => {
-        const source = document.createElement('source');
-        source.setAttribute('src', src);
-        if (/\.mp4($|\?)/i.test(src)) source.setAttribute('type', 'video/mp4');
-        video.appendChild(source);
-      });
-    if (video.querySelector('source')) rightCell.push(video);
+      .find((s) => s && s.trim());
+    if (mp4) {
+      const videoLink = document.createElement('a');
+      videoLink.setAttribute('href', mp4);
+      videoLink.textContent = mp4;
+      rightCell.push(videoLink);
+      // Skip an animated-GIF poster: they are frequently >20MB (DA content-bus
+      // rejects images over 20MB) and the mp4 plays over the poster anyway.
+      const posterSrc = posterImg && posterImg.getAttribute('src');
+      if (posterSrc && !/\.gif($|\?)/i.test(posterSrc)) rightCell.push(posterImg);
+    }
   }
-  // Fallback: if no video, use the media image so the column is never empty.
-  if (rightCell.length === 0 && posterImg) rightCell.push(posterImg);
+  // Fallback: if no video, use the media image so the column is never empty
+  // (still skip oversized animated GIFs).
+  if (rightCell.length === 0 && posterImg) {
+    const posterSrc = posterImg.getAttribute('src') || '';
+    if (!/\.gif($|\?)/i.test(posterSrc)) rightCell.push(posterImg);
+  }
 
   if (leftCell.length === 0 && rightCell.length === 0) {
     element.replaceWith(...element.childNodes);

@@ -9,27 +9,22 @@
  *   Row 3: content — eyebrow, heading, subheading, CTA, foreground media image
  */
 export default function parse(element, { document }) {
-  // --- Background video (preserve as a real <video>, do NOT drop or replace with image) ---
+  // --- Background video (preserve as a link whose TEXT is the mp4 URL, the EDS video
+  //     convention). An empty <a href="x.mp4"></a> is stripped by EDS/DA rendering, so the
+  //     URL must be visible link text; blocks/hero-video decorates it into a real <video>. ---
   const srcVideo = element.querySelector('video.hero-jon__bg, video');
-  let bgVideo = null;
+  let videoLink = null;
+  let posterSrc = null;
   if (srcVideo) {
-    bgVideo = document.createElement('video');
-    bgVideo.setAttribute('autoplay', '');
-    bgVideo.setAttribute('muted', '');
-    bgVideo.setAttribute('loop', '');
-    bgVideo.setAttribute('playsinline', '');
-    const poster = srcVideo.getAttribute('poster');
-    if (poster) bgVideo.setAttribute('poster', poster);
-    // Copy every non-empty <source> URL from the original video.
-    const sources = Array.from(srcVideo.querySelectorAll('source'))
+    posterSrc = srcVideo.getAttribute('poster');
+    const mp4 = Array.from(srcVideo.querySelectorAll('source'))
       .map((s) => s.getAttribute('src'))
-      .filter((s) => s && s.trim());
-    sources.forEach((src) => {
-      const source = document.createElement('source');
-      source.setAttribute('src', src);
-      if (/\.mp4($|\?)/i.test(src)) source.setAttribute('type', 'video/mp4');
-      bgVideo.appendChild(source);
-    });
+      .find((s) => s && s.trim());
+    if (mp4) {
+      videoLink = document.createElement('a');
+      videoLink.setAttribute('href', mp4);
+      videoLink.textContent = mp4;
+    }
   }
 
   // --- Content ---
@@ -43,9 +38,16 @@ export default function parse(element, { document }) {
 
   const cells = [];
 
-  // Row 2: background media (video preserved with sources/poster).
-  if (bgVideo && bgVideo.querySelector('source')) {
-    cells.push([bgVideo]);
+  // Row 2: background media (video link + optional poster image).
+  if (videoLink) {
+    const mediaCell = [videoLink];
+    if (posterSrc) {
+      const posterImg = document.createElement('img');
+      posterImg.setAttribute('src', posterSrc);
+      posterImg.setAttribute('alt', '');
+      mediaCell.push(posterImg);
+    }
+    cells.push([mediaCell]);
   }
 
   // Row 3: content cell.

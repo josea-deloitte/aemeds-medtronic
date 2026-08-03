@@ -1,19 +1,22 @@
 .cards-rail > ul {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 16px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: 280px;
   gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
 }
 
 .cards-rail > ul > li {
-  border: 1px solid #dadada;
+  scroll-snap-align: start;
   background-color: var(--background-color);
-}
-
-.cards-rail .cards-rail-card-body {
-  margin: 16px;
+  border: 1px solid #dadada;
+  display: flex;
+  flex-direction: column;
 }
 
 .cards-rail .cards-rail-card-image {
@@ -24,4 +27,34 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+.cards-rail .cards-rail-card-body {
+  margin: 16px;
+  flex: 1;
+}
+
+/* category eyebrow */
+.cards-rail .cards-rail-card-body p:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--body-font-size-xs);
+  font-weight: 700;
+  color: #1010ab;
+  margin: 0 0 8px;
+}
+
+.cards-rail .cards-rail-card-body h3 {
+  font-size: var(--heading-font-size-s);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.cards-rail .cards-rail-card-body h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cards-rail .cards-rail-card-body h3 a:hover {
+  text-decoration: underline;
 }
