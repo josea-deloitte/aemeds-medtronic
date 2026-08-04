@@ -212,6 +212,13 @@ header nav .nav-back-icon {
     min-height: 0;
   }
 
+  /* Comfortable tap targets, one row per link, divided by a hairline. */
+  header nav ul.nav-sections a {
+    display: block;
+    padding: 14px 4px;
+    border-bottom: 1px solid rgb(0 0 0 / 12%);
+  }
+
   /* One level visible at a time: a nested list is a full-panel overlay,
      shown only while its own <li> is expanded. */
   header nav ul.nav-sections .nav-drop > ul {
@@ -242,13 +249,6 @@ header nav .nav-back-icon {
     border: 2px solid currentcolor;
     border-width: 2px 2px 0 0;
     transform: rotate(45deg);
-  }
-
-  /* Comfortable tap targets, one row per link, divided by a hairline. */
-  header nav ul.nav-sections a {
-    display: block;
-    padding: 14px 4px;
-    border-bottom: 1px solid rgb(0 0 0 / 12%);
   }
 }
 
