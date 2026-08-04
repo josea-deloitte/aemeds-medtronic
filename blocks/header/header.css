@@ -1,10 +1,19 @@
-/* header and nav layout */
+/* =========================================================
+ * Header — white bar matching the AEM original design.
+ * Sits in normal document flow (not an overlay); text and
+ * controls use dark colours; a subtle bottom shadow provides
+ * depth against the page content below.
+ * ========================================================= */
+
+/* Wrapper: white background, full width, bottom border. */
 header .nav-wrapper {
-  background: linear-gradient(180deg, rgb(10 8 40 / 85%) 0%, rgb(10 8 40 / 0%) 100%);
-  color: #fff;
+  background: #fff;
+  color: #1e1e1e;
   width: 100%;
-  z-index: 2;
-  position: absolute;
+  border-bottom: 1px solid rgb(0 0 0 / 10%);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 6%);
+  position: relative;
+  z-index: 100;
 }
 
 header nav {
@@ -45,7 +54,7 @@ header nav p {
 }
 
 header nav a:any-link {
-  color: currentcolor;
+  color: #1e1e1e;
 }
 
 /* hamburger (semantic <button>) */
@@ -133,7 +142,7 @@ header nav a.nav-brand {
 header nav a.nav-brand img {
   width: 128px;
   height: auto;
-  filter: brightness(0) invert(1);
+  filter: brightness(0); /* white SVG → dark; replace with filter:none when the dark logo is uploaded */
 }
 
 /* sections: primary navigation as a semantic <ul> */
@@ -187,15 +196,6 @@ header nav .nav-back-button {
   cursor: pointer;
 }
 
-header nav .nav-back-icon {
-  flex: none;
-  width: 7px;
-  height: 7px;
-  border: 2px solid currentcolor;
-  border-width: 0 0 2px 2px;
-  transform: rotate(45deg);
-}
-
 @media (width < 900px) {
   /* Stack utility row + sections, letting sections grow to fill the drawer
      so drilled-in panels (position:absolute; inset:0 below) have a full-height
@@ -226,7 +226,7 @@ header nav .nav-back-icon {
     position: absolute;
     inset: 0;
     overflow-y: auto;
-    background-color: var(--light-color, #fff);
+    background-color: #fff;
   }
 
   header nav ul.nav-sections .nav-drop[aria-expanded='true'] > ul {
@@ -306,7 +306,9 @@ header nav .nav-back-icon {
     max-height: 70vh;
     overflow-y: auto;
     padding: 16px 0;
-    background-color: var(--light-color);
+    background-color: #fff;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+    border-radius: 4px;
     white-space: initial;
   }
 
@@ -415,7 +417,7 @@ header nav .nav-tools .nav-search-icon::after {
 }
 
 header nav .nav-tools a:any-link {
-  color: #fff;
+  color: #1e1e1e;
   font-size: var(--body-font-size-xs);
   white-space: nowrap;
 }

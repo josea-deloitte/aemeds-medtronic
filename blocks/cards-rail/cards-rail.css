@@ -5,18 +5,17 @@
   padding: 0 0 8px;
   display: flex;
   flex-wrap: nowrap;
-  gap: 20px;
+  gap: 0;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
   scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Each card is transparent (no border/shadow), fixed width, snaps to start. */
+/* Each card is transparent (no border/shadow), fixed width. */
 .cards-rail .cards-rail-card {
   flex: 0 0 304px;
   max-width: 304px;
-  scroll-snap-align: start;
+  padding-right: 20px;
 }
 
 .cards-rail .cards-rail-card-link {
@@ -70,6 +69,6 @@
 
 @media (width >= 900px) {
   .cards-rail > ul {
-    gap: 20px;
+    gap: 0;
   }
 }
