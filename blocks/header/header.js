@@ -170,7 +170,10 @@ function decorateNavGroup(ul) {
  * @param {Element} navTools the tools section element
  */
 function buildAudienceSelect(navTools) {
-  const list = navTools.querySelector('ul');
+  // The audience list is the <ul> whose items are plain text (no links); the
+  // country/region list (whose items ARE links) must not be consumed here.
+  const list = [...navTools.querySelectorAll(':scope > ul')]
+    .find((ul) => !ul.querySelector('a'));
   const options = list ? [...list.querySelectorAll('li')].map((li) => li.textContent.trim()) : [];
   const select = document.createElement('select');
   select.className = 'nav-audience';
@@ -238,11 +241,17 @@ function decorateSearch(navTools) {
  * @param {Element} navTools the tools section element
  */
 function decorateRegion(navTools) {
-  // The region label paragraph carries the location icon + current region text.
-  const labelP = [...navTools.querySelectorAll(':scope > p')]
-    .find((p) => p.querySelector('.icon-location'));
-  const list = navTools.querySelector('ul');
-  if (!labelP || !list) return;
+  // The country/region list is the <ul> whose items are links; the audience
+  // list (plain-text items) is handled separately.
+  const list = [...navTools.querySelectorAll(':scope > ul')]
+    .find((ul) => ul.querySelector('a'));
+  if (!list) return;
+  // The region label is the <p> with the location icon, or (fallback) the <p>
+  // immediately preceding the country list.
+  const labelP = [...navTools.querySelectorAll(':scope > p')].find((p) => p.querySelector('.icon-location'))
+    || (list.previousElementSibling && list.previousElementSibling.tagName === 'P'
+      ? list.previousElementSibling : null);
+  if (!labelP) return;
 
   const current = labelP.textContent.trim();
 
