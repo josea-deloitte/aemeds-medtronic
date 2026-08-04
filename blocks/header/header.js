@@ -249,7 +249,7 @@ function decorateSearch(navTools) {
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/fragmetns/nav';
   const fragment = await loadFragment(navPath);
 
   // The fragment yields three source blocks: [0] brand, [1] primary nav, [2] tools.
