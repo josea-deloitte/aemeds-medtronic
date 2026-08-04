@@ -288,6 +288,13 @@ export default async function decorate(block) {
   const toolsSource = sourceSections[2];
   if (toolsSource) {
     while (toolsSource.firstElementChild) navTools.append(toolsSource.firstElementChild);
+    // EDS auto-wraps default content in .default-content-wrapper — flatten it
+    // so nav-tools' direct children are the actual content elements.
+    const dcw = navTools.querySelector('.default-content-wrapper');
+    if (dcw) {
+      while (dcw.firstChild) navTools.insertBefore(dcw.firstChild, dcw);
+      dcw.remove();
+    }
   }
 
   utility.append(hamburger, brand, navTools);

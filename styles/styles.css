@@ -37,7 +37,11 @@
   --heading-font-size-xs: 22px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 72px;
+
+  /* brand colours */
+  --color-brand-blue: #1010eb;
+  --color-brand-navy: #170f5f;
 }
 
 /* fallback fonts */

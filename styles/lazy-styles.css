@@ -1,5 +1,28 @@
 /* add global styles that can be loaded post LCP here */
 
+/* ── Eyebrow label ──────────────────────────────────────────────────────────
+ * A standalone <p> that sits directly before an <h1/h2/h3> inside a section's
+ * default-content-wrapper is treated as a section label ("eyebrow"):
+ * uppercase, letter-spaced, Medtronic navy, with a short blue top rule.
+ * Authors: just type the label as plain paragraph text above the heading —
+ * no special markup needed.
+ * ─────────────────────────────────────────────────────────────────────────── */
+.section .default-content-wrapper > p:has(+ h1),
+.section .default-content-wrapper > p:has(+ h2),
+.section .default-content-wrapper > p:has(+ h3) {
+  display: inline-block;
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-top: 8px;
+  border-top: 2px solid #1010eb;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #170f5f;
+  line-height: 1;
+}
+
 /* Site search overlay (Coveo Atomic), lazy-loaded via delayed.js */
 .site-search-panel {
   position: fixed;
