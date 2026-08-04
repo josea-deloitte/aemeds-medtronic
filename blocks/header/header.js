@@ -60,7 +60,7 @@ function focusNavSection() {
  */
 function toggleAllNavSections(sections, expanded = false) {
   if (!sections) return;
-  sections.querySelectorAll(':scope > li').forEach((section) => {
+  sections.querySelectorAll('.nav-drop').forEach((section) => {
     section.setAttribute('aria-expanded', expanded);
   });
 }
@@ -106,6 +106,59 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
     window.removeEventListener('keydown', closeOnEscape);
     nav.removeEventListener('focusout', closeOnFocusLost);
   }
+}
+
+/**
+ * Builds the synthetic "back" row shown at the top of a drilled-into mobile
+ * submenu (mirrors the source's generic "Overview" back control). Collapsing
+ * also resets any deeper level left open beneath it, so re-entering starts fresh.
+ * @param {Element} li the nav-drop <li> this back control collapses
+ */
+function buildNavBack(li) {
+  const back = document.createElement('li');
+  back.className = 'nav-back';
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'nav-back-button';
+  button.innerHTML = '<span class="nav-back-icon"></span>Overview';
+  button.addEventListener('click', () => {
+    li.setAttribute('aria-expanded', 'false');
+    li.querySelectorAll('.nav-drop').forEach((drop) => drop.setAttribute('aria-expanded', 'false'));
+  });
+  back.append(button);
+  return back;
+}
+
+/**
+ * Recursively decorates a nav <ul> at any depth: marks each <li> that has a
+ * nested <ul> as a "nav-drop" (toggleable), and prepends a synthetic "Overview"
+ * back row to its child list. On mobile the block's CSS shows one level at a
+ * time (a drill-down); on desktop each level cascades as a flyout column to
+ * the right of its parent. Supports the source's 3-level depth (and beyond).
+ * @param {Element} ul the <ul> to decorate
+ */
+function decorateNavGroup(ul) {
+  [...ul.children].forEach((li) => {
+    const childUl = li.querySelector(':scope > ul');
+    if (!childUl) return;
+    li.classList.add('nav-drop');
+    li.setAttribute('aria-expanded', 'false');
+    childUl.prepend(buildNavBack(li));
+
+    const trigger = li.querySelector(':scope > a');
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      const expanded = li.getAttribute('aria-expanded') === 'true';
+      [...ul.children].forEach((sibling) => {
+        if (sibling !== li && sibling.classList.contains('nav-drop')) {
+          sibling.setAttribute('aria-expanded', 'false');
+        }
+      });
+      li.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+    });
+
+    decorateNavGroup(childUl);
+  });
 }
 
 /**
@@ -245,16 +298,7 @@ export default async function decorate(block) {
   let navSections = null;
   if (navList) {
     navList.classList.add('nav-sections');
-    navList.querySelectorAll(':scope > li').forEach((li) => {
-      if (li.querySelector('ul')) li.classList.add('nav-drop');
-      li.addEventListener('click', () => {
-        if (isDesktop.matches) {
-          const expanded = li.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navList);
-          li.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-        }
-      });
-    });
+    decorateNavGroup(navList);
     nav.append(navList);
     navSections = navList;
   }

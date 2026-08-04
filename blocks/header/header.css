@@ -163,6 +163,95 @@ header nav ul.nav-sections > li > ul > li {
   font-weight: 400;
 }
 
+/* --- Drill-down (mobile) / cascading flyout (desktop) submenus, any depth ---
+   The source mega menu goes 3 levels deep (e.g. Healthcare Professionals >
+   Products > Access & Instruments); this supports that depth generically. */
+
+/* Synthetic "Overview" back row (mobile only), injected by header.js at the
+   top of every drilled-into submenu — always this generic label, matching
+   the source, rather than a dynamic breadcrumb of the parent's name. */
+header nav .nav-back-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid rgb(0 0 0 / 12%);
+  padding: 14px 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 500;
+  color: rgb(30 30 30 / 70%);
+  text-align: left;
+  cursor: pointer;
+}
+
+header nav .nav-back-icon {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border: 2px solid currentcolor;
+  border-width: 0 0 2px 2px;
+  transform: rotate(45deg);
+}
+
+@media (width < 900px) {
+  /* Stack utility row + sections, letting sections grow to fill the drawer
+     so drilled-in panels (position:absolute; inset:0 below) have a full-height
+     box to cover rather than only the height of the top-level item list. */
+  header nav[aria-expanded='true'] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  header nav ul.nav-sections {
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  /* One level visible at a time: a nested list is a full-panel overlay,
+     shown only while its own <li> is expanded. */
+  header nav ul.nav-sections .nav-drop > ul {
+    display: none;
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    background-color: var(--light-color, #fff);
+  }
+
+  header nav ul.nav-sections .nav-drop[aria-expanded='true'] > ul {
+    display: block;
+  }
+
+  header nav ul.nav-sections .nav-drop > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  /* Right-pointing chevron indicates "drills into a submenu". */
+  header nav ul.nav-sections .nav-drop > a::after {
+    content: '';
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border: 2px solid currentcolor;
+    border-width: 2px 2px 0 0;
+    transform: rotate(45deg);
+  }
+
+  /* Comfortable tap targets, one row per link, divided by a hairline. */
+  header nav ul.nav-sections a {
+    display: block;
+    padding: 14px 4px;
+    border-bottom: 1px solid rgb(0 0 0 / 12%);
+  }
+}
+
 @media (width >= 900px) {
   header nav ul.nav-sections {
     display: flex;
@@ -170,6 +259,10 @@ header nav ul.nav-sections > li > ul > li {
     gap: 32px;
     white-space: nowrap;
     margin-top: 4px;
+  }
+
+  header nav .nav-back {
+    display: none;
   }
 
   header nav ul.nav-sections .nav-drop {
@@ -203,23 +296,34 @@ header nav ul.nav-sections > li > ul > li {
     position: relative;
   }
 
-  header nav ul.nav-sections > li > ul {
+  /* Every level (any depth) flies out as its own column, same size. */
+  header nav ul.nav-sections .nav-drop > ul {
     display: none;
     position: absolute;
     left: -24px;
     top: 150%;
-    width: 200px;
-    padding: 16px;
+    width: 240px;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 16px 0;
     background-color: var(--light-color);
     white-space: initial;
   }
 
-  header nav ul.nav-sections > li[aria-expanded='true'] > ul {
+  header nav ul.nav-sections .nav-drop[aria-expanded='true'] > ul {
     display: block;
   }
 
-  header nav ul.nav-sections > li > ul > li {
-    padding: 8px 0;
+  header nav ul.nav-sections .nav-drop ul li {
+    padding: 8px 16px;
+  }
+
+  /* A submenu nested inside another submenu cascades to the right of its
+     parent column (matching the source's multi-column mega menu) instead of
+     dropping below it. */
+  header nav ul.nav-sections .nav-drop .nav-drop > ul {
+    top: 0;
+    left: 100%;
   }
 }
 
