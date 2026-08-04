@@ -363,13 +363,13 @@ export default async function decorate(block) {
   const toolsSource = sourceSections[2];
   if (toolsSource) {
     while (toolsSource.firstElementChild) navTools.append(toolsSource.firstElementChild);
-    // EDS auto-wraps default content in .default-content-wrapper — flatten it
-    // so nav-tools' direct children are the actual content elements.
-    const dcw = navTools.querySelector('.default-content-wrapper');
-    if (dcw) {
-      while (dcw.firstChild) navTools.insertBefore(dcw.firstChild, dcw);
+    // EDS may auto-wrap default content in one or more .default-content-wrapper
+    // (and split it around auto-blocks). Flatten EVERY wrapper so nav-tools'
+    // direct children are the actual content elements (p, ul, etc.).
+    navTools.querySelectorAll('.default-content-wrapper').forEach((dcw) => {
+      while (dcw.firstChild) dcw.parentNode.insertBefore(dcw.firstChild, dcw);
       dcw.remove();
-    }
+    });
   }
 
   utility.append(hamburger, brand, navTools);
