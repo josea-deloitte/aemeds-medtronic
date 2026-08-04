@@ -146,16 +146,18 @@ function decorateNavGroup(ul) {
     childUl.prepend(buildNavBack(li));
 
     const trigger = li.querySelector(':scope > a');
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      const expanded = li.getAttribute('aria-expanded') === 'true';
-      [...ul.children].forEach((sibling) => {
-        if (sibling !== li && sibling.classList.contains('nav-drop')) {
-          sibling.setAttribute('aria-expanded', 'false');
-        }
+    if (trigger) {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const expanded = li.getAttribute('aria-expanded') === 'true';
+        [...ul.children].forEach((sibling) => {
+          if (sibling !== li && sibling.classList.contains('nav-drop')) {
+            sibling.setAttribute('aria-expanded', 'false');
+          }
+        });
+        li.setAttribute('aria-expanded', expanded ? 'false' : 'true');
       });
-      li.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-    });
+    }
 
     decorateNavGroup(childUl);
   });
