@@ -1,60 +1,75 @@
+/* "Innovation in action" story rail — horizontal scroller of story cards. */
 .cards-rail > ul {
   list-style: none;
   margin: 0;
-  padding: 0 0 16px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 280px;
-  gap: 24px;
+  padding: 0 0 8px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
-.cards-rail > ul > li {
+/* Each card is transparent (no border/shadow), fixed width, snaps to start. */
+.cards-rail .cards-rail-card {
+  flex: 0 0 304px;
+  max-width: 304px;
   scroll-snap-align: start;
-  background-color: var(--background-color);
-  border: 1px solid #dadada;
-  display: flex;
-  flex-direction: column;
 }
 
-.cards-rail .cards-rail-card-image {
-  line-height: 0;
-}
-
-.cards-rail > ul > li img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-.cards-rail .cards-rail-card-body {
-  margin: 16px;
-  flex: 1;
-}
-
-/* category eyebrow */
-.cards-rail .cards-rail-card-body p:first-child {
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: var(--body-font-size-xs);
-  font-weight: 700;
-  color: #1010ab;
-  margin: 0 0 8px;
-}
-
-.cards-rail .cards-rail-card-body h3 {
-  font-size: var(--heading-font-size-s);
-  line-height: 1.25;
-  margin: 0;
-}
-
-.cards-rail .cards-rail-card-body h3 a {
+.cards-rail .cards-rail-card-link {
+  display: block;
   color: inherit;
   text-decoration: none;
 }
 
-.cards-rail .cards-rail-card-body h3 a:hover {
+/* Image: ~4:5 portrait crop. */
+.cards-rail .cards-rail-card-image {
+  line-height: 0;
+}
+
+.cards-rail .cards-rail-card-image img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content. */
+.cards-rail .cards-rail-card-body {
+  padding-top: 4px;
+}
+
+.cards-rail .cards-rail-card-category {
+  margin: 26px 0 0;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.3px;
+  color: rgb(0 0 0 / 77%);
+}
+
+.cards-rail .cards-rail-card-title {
+  margin: 20px 0 10px;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 500;
+  color: #170f5f;
+}
+
+/* Hover affordance on the whole card. */
+.cards-rail .cards-rail-card-link:hover .cards-rail-card-title {
   text-decoration: underline;
+}
+
+.cards-rail .cards-rail-card-link:hover .cards-rail-card-image img {
+  opacity: 0.92;
+}
+
+@media (width >= 900px) {
+  .cards-rail > ul {
+    gap: 20px;
+  }
 }
