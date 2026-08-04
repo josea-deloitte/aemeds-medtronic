@@ -21,14 +21,17 @@ The document has three sections, separated by a horizontal rule (`---`). **Do no
 | # | Section | Contains |
 |---|---|---|
 | 1 | **Brand** | A single image, linked to the homepage. This is the Medtronic logo. |
-| 2 | **Primary navigation** | A bulleted list. Each top-level bullet is a nav item; if a bullet has a *nested* bulleted list under it, it becomes a dropdown on desktop. |
+| 2 | **Primary navigation** | A bulleted list. Each top-level bullet is a nav item; if a bullet has a *nested* bulleted list under it, it becomes a submenu. Nesting can go as deep as needed — the source site's own menu goes 3 levels (e.g. Healthcare Professionals → Products → Access & Instruments), and the block supports that depth (and beyond). |
 | 3 | **Tools** | A bulleted list of audience options (*Healthcare professionals / Patients / Career seekers* — becomes the "Search within" dropdown), plus a link (*Education and training*) and a paragraph holding the search icon. |
 
 ### How to edit it
 
 - **Change the logo:** replace the image in section 1. Keep it linked to `/en-us` (or the relevant locale homepage).
 - **Add/remove/rename a top-level nav item:** edit the bullet list in section 2. Text becomes the label, the link on that text becomes the destination.
-- **Add a dropdown:** under a top-level bullet, indent a nested bulleted list (Tab in da.live's list editor). Each nested bullet becomes a dropdown link.
+- **Add a submenu:** under any bullet, indent a nested bulleted list (Tab in da.live's list editor). Each nested bullet becomes a submenu link — and can itself have a further-nested list if it needs one more level.
+  - On **mobile**, tapping an item with a submenu slides in that submenu full-screen; a "‹ Overview" row is added automatically at the top of every submenu to go back one level — you don't need to author this yourself.
+  - On **desktop**, each submenu opens as its own flyout column, cascading to the right of its parent column the deeper you go.
+  - A bullet's own link (if any) is only used as its destination inside content elsewhere — once a bullet has a nested list, clicking/tapping the item itself always opens the submenu rather than navigating.
 - **Change the audience options:** edit the first list in section 3.
 - **Change the "Education and training" link:** edit the link text/URL directly — the link label and href both come from that line.
 - **Do not delete the search icon paragraph** in section 3 — removing it will hide the search box entirely.
