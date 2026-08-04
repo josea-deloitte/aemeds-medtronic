@@ -1,22 +1,38 @@
 /* "Innovation in action" story rail — horizontal scroller of story cards. */
+
+/* Bleed the rail out to the section's own edges (it sits inside
+   `main > .section > div`, which is centered with 24px/32px side padding)
+   so cards can scroll flush to the edge instead of stopping twice-inset. */
+.cards-rail {
+  margin: 0 -24px;
+}
+
 .cards-rail > ul {
   list-style: none;
   margin: 0;
-  padding: 0 0 8px;
+  padding: 0 24px 8px;
   display: flex;
   flex-wrap: nowrap;
   gap: 20px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  cursor: grab;
 }
 
-/* Each card is transparent (no border/shadow), fixed width, snaps to start. */
+.cards-rail > ul::-webkit-scrollbar {
+  display: none;
+}
+
+.cards-rail > ul.is-dragging {
+  cursor: grabbing;
+}
+
+/* Each card is transparent (no border/shadow), fixed width. */
 .cards-rail .cards-rail-card {
   flex: 0 0 304px;
   max-width: 304px;
-  scroll-snap-align: start;
+  user-select: none;
 }
 
 .cards-rail .cards-rail-card-link {
@@ -35,11 +51,7 @@
   aspect-ratio: 4 / 5;
   object-fit: cover;
   display: block;
-}
-
-/* Content. */
-.cards-rail .cards-rail-card-body {
-  padding-top: 4px;
+  pointer-events: none;
 }
 
 .cards-rail .cards-rail-card-category {
@@ -59,17 +71,17 @@
   color: #170f5f;
 }
 
-/* Hover affordance on the whole card. */
+/* Hover affordance on the whole card: title turns brand-blue (no underline). */
 .cards-rail .cards-rail-card-link:hover .cards-rail-card-title {
-  text-decoration: underline;
-}
-
-.cards-rail .cards-rail-card-link:hover .cards-rail-card-image img {
-  opacity: 0.92;
+  color: #1010eb;
 }
 
 @media (width >= 900px) {
+  .cards-rail {
+    margin: 0 -32px;
+  }
+
   .cards-rail > ul {
-    gap: 20px;
+    padding: 0 32px 8px;
   }
 }

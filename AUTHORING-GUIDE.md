@@ -67,6 +67,10 @@ Each row of the table is one card, with **two columns**:
 - Add one row per card; there's no fixed minimum/maximum, but 5–8 cards is the sweet spot for a scroll rail (too few won't scroll, too many gets tedious to browse).
 - Images: upload the actual full-size image asset in da.live — don't leave a hotlinked medtronic.com URL in production content, that's only acceptable in local drafts/test content.
 
+### How the rail behaves (nothing to author, just context)
+
+This isn't something you configure, but it's expected behavior so you don't mistake it for a bug: the rail slowly auto-advances on its own, and pauses as soon as a visitor hovers, touches, clicks into, or tabs into it (resuming once they move away). Visitors can also click-and-drag the rail on desktop, not just swipe it on touch devices; releasing snaps it to the nearest card. None of this runs for visitors whose OS is set to reduce motion.
+
 ### Applying a "light"/"dark" section style
 
 The homepage example wraps the rail in a section styled `light`. To do this:
