@@ -229,6 +229,70 @@ function decorateSearch(navTools) {
 }
 
 /**
+ * Builds the region/language selector: a trigger button showing the current
+ * region and a dropdown panel listing every country link. Content comes from
+ * the nav fragment (a ":location: <current region>" paragraph followed by a
+ * <ul> of country <a>s); this only builds the interactive shell.
+ * @param {Element} navTools the tools section element
+ */
+function decorateRegion(navTools) {
+  // The region label paragraph carries the location icon + current region text.
+  const labelP = [...navTools.querySelectorAll(':scope > p')]
+    .find((p) => p.querySelector('.icon-location'));
+  const list = navTools.querySelector('ul');
+  if (!labelP || !list) return;
+
+  const current = labelP.textContent.trim();
+
+  const region = document.createElement('div');
+  region.className = 'nav-region';
+
+  const trigger = document.createElement('button');
+  trigger.type = 'button';
+  trigger.className = 'nav-region-trigger';
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.setAttribute('aria-haspopup', 'true');
+  trigger.innerHTML = '<span class="icon icon-location"></span>';
+  const label = document.createElement('span');
+  label.className = 'nav-region-label';
+  label.textContent = current;
+  trigger.append(label);
+
+  const panel = document.createElement('div');
+  panel.className = 'nav-region-panel';
+  panel.hidden = true;
+  list.classList.add('nav-region-list');
+  // Mark the current region for highlighting.
+  list.querySelectorAll('a').forEach((a) => {
+    if (a.textContent.trim() === current.replace(/^\s*/, '')) a.setAttribute('aria-current', 'true');
+  });
+  panel.append(list);
+
+  trigger.addEventListener('click', () => {
+    const open = trigger.getAttribute('aria-expanded') === 'true';
+    trigger.setAttribute('aria-expanded', open ? 'false' : 'true');
+    panel.hidden = open;
+  });
+  // Close on outside click / escape.
+  document.addEventListener('click', (e) => {
+    if (!region.contains(e.target) && trigger.getAttribute('aria-expanded') === 'true') {
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.hidden = true;
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.hidden = true;
+      trigger.focus();
+    }
+  });
+
+  region.append(trigger, panel);
+  labelP.replaceWith(region);
+}
+
+/**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
  *
@@ -310,8 +374,10 @@ export default async function decorate(block) {
     navSections = navList;
   }
 
-  // Build the search box from the tools content (audience select + input + submit).
+  // Build the search box (consumes the audience <ul>), then the region selector
+  // (uses the remaining country <ul>). Order matters: search must run first.
   decorateSearch(navTools);
+  decorateRegion(navTools);
 
   // Wire the hamburger and initial expanded state.
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
