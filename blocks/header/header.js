@@ -388,8 +388,18 @@ export default async function decorate(block) {
 
   // Build the search box (consumes the audience <ul>), then the region selector
   // (uses the remaining country <ul>). Order matters: search must run first.
-  decorateSearch(navTools);
-  decorateRegion(navTools);
+  try {
+    decorateSearch(navTools);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('[header] decorateSearch failed', e);
+  }
+  try {
+    decorateRegion(navTools);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('[header] decorateRegion failed', e);
+  }
 
   // Wire the hamburger and initial expanded state.
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
