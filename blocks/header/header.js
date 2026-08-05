@@ -386,10 +386,10 @@ export default async function decorate(block) {
     navSections = navList;
   }
 
-  // Build the search box (consumes the audience <ul>), then the region selector
-  // (uses the remaining country <ul>). Order matters: search must run first.
-  decorateSearch(navTools);
+  // Build the region selector FIRST (it removes the country <ul> + label so the
+  // search's audience-list detection can't be confused by them), then search.
   decorateRegion(navTools);
+  decorateSearch(navTools);
 
   // Wire the hamburger and initial expanded state.
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
