@@ -2,9 +2,9 @@
   "type": "doc",
   "sites": {
     "aemeds-medtronic": {
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json",
       "previewOrg": "josea-deloitte",
-      "previewSite": "aemeds-medtronic",
-      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+      "previewSite": "aemeds-medtronic"
     }
   }
 }

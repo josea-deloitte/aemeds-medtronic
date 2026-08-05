@@ -20,15 +20,17 @@ header nav {
   box-sizing: border-box;
   margin: auto;
   max-width: 1312px;
-  padding: 10px 24px;
+  padding: 11px 24px;
   font-family: var(--body-font-family);
 }
 
-/* Row 1: utility bar (menu + logo + search + tools). */
+/* Row 1: utility bar (menu + logo + search + tools).
+   min-height matches the source's 42px control row inside the 64px bar. */
 header nav .nav-utility {
   display: flex;
   align-items: center;
   gap: 20px;
+  min-height: 42px;
 }
 
 /* Row 2 is hidden behind the drawer on mobile. */
@@ -140,9 +142,8 @@ header nav a.nav-brand {
 }
 
 header nav a.nav-brand img {
-  width: 128px;
+  width: 150px;
   height: auto;
-  filter: brightness(0); /* white SVG → dark; replace with filter:none when the dark logo is uploaded */
 }
 
 /* sections: primary navigation as a semantic <ul> */
@@ -162,6 +163,10 @@ header nav[aria-expanded='true'] ul.nav-sections {
 
 header nav ul.nav-sections > li {
   font-weight: 500;
+}
+
+header nav ul.nav-sections .nav-drop {
+  color: #1010eb;
 }
 
 header nav ul.nav-sections > li > ul {
@@ -344,7 +349,8 @@ header nav .nav-tools .nav-search {
   flex: 1 1 auto;
   max-width: 840px;
   height: 42px;
-  background: rgb(255 255 255 / 96%);
+  background: #efefef;
+  border: 1px solid #1010eb;
   border-radius: 100px;
   overflow: hidden;
 }
@@ -354,11 +360,11 @@ header nav .nav-tools .nav-audience {
   border: 0;
   background: transparent;
   color: #1010eb;
-  font-weight: 700;
+  font-weight: 400;
   padding: 0 30px 0 20px;
   font-size: var(--body-font-size-xs);
   cursor: pointer;
-  border-right: 1px solid rgb(0 0 0 / 12%);
+  border-right: 1px solid rgb(16 16 235 / 40%);
 }
 
 header nav .nav-tools .nav-audience option {
@@ -425,11 +431,11 @@ header nav .nav-tools a:any-link {
   gap: 6px;
 }
 
-/* utility icons (academy / location) rendered white in the header bar */
+/* utility icons (academy / location) rendered dark on the white header bar */
 header nav .nav-tools .icon img {
   width: 20px;
   height: 20px;
-  filter: brightness(0) invert(1);
+  filter: brightness(0);
 }
 
 /* --- Region / language selector --- */
@@ -444,7 +450,7 @@ header nav .nav-region-trigger {
   gap: 6px;
   border: 0;
   background: transparent;
-  color: #fff;
+  color: #1e1e1e;
   font-size: var(--body-font-size-xs);
   cursor: pointer;
   white-space: nowrap;
@@ -453,7 +459,7 @@ header nav .nav-region-trigger {
 header nav .nav-region-trigger .icon img {
   width: 18px;
   height: 18px;
-  filter: brightness(0) invert(1);
+  filter: brightness(0);
 }
 
 header nav .nav-region-trigger::after {
@@ -513,6 +519,12 @@ header nav ul.nav-region-list a:hover {
 
 header nav ul.nav-region-list a[aria-current='true'] {
   font-weight: 700;
+  color: #1010eb;
+}
+
+/* Top-level primary nav links use the Medtronic blue (declared last so it does
+   not precede the lower-specificity :any-link rules above). */
+header nav ul.nav-sections > li > a:any-link {
   color: #1010eb;
 }
 
