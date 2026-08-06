@@ -13,6 +13,10 @@ Before using the aem-boilerplate, we recommand you to go through the documentati
 3. [Web Performance](https://www.aem.live/developer/keeping-it-100)
 4. [Markup, Sections, Blocks, and Auto Blocking](https://www.aem.live/developer/markup-sections-blocks)
 
+## Authoring
+
+Content editors: see the **[Authoring Guide](AUTHORING-GUIDE.md)** for how to author the site's blocks in da.live — the header/navigation fragment, the Cards Rail story rail, and the Cards Promo featured card (white banner and navy Our-Impact card variants).
+
 ## Installation
 
 ```sh

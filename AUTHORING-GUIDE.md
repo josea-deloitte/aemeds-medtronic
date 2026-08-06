@@ -1,6 +1,6 @@
-# Authoring Guide — Header & Cards Rail (da.live)
+# Authoring Guide (da.live)
 
-This guide is for content editors authoring the Medtronic site in **da.live**. It covers the two blocks reworked to match the original medtronic.com design: the global **header/navigation** and the **Cards Rail** ("Innovation in action" style story rail).
+This guide is for content editors authoring the Medtronic site in **da.live**. It covers the blocks reworked to match the original medtronic.com design: the global **header/navigation**, the **Cards Rail** ("Innovation in action" story rail), and the **Cards Promo** featured card (white banner / navy Our-Impact card).
 
 ---
 
@@ -107,12 +107,59 @@ Preview the page and scroll-check on both mobile and desktop widths. The card wi
 
 ---
 
+## 3. Cards Promo block
+
+### What it's for
+
+A single promotional card pairing **one image** with a text block (category eyebrow, headline, optional copy, and a "Learn more" link). Use it for a featured call-out — a community story, an award announcement, or a report highlight.
+
+It renders in **one of two layouts, chosen automatically from where you place it** — you do **not** type a variant name:
+
+| Layout | When it applies | Looks like |
+|---|---|---|
+| **Banner** (white, horizontal) | The block is in its **own section** (not combined with the Our Impact cards) | A wide white card, image on the left (~40%), text on the right, soft drop shadow, capped at 1087px. Used for the homepage "Communities / Spark scholarships" banner. |
+| **Navy card** (dark, vertical) | The block sits in the **Our Impact composite section** (the same section as the gradient *Our Impact* intro and the stat cards) | A tall dark-navy card, image on top, white text, spanning the right column of the Our Impact grid. Used for "Unlocking the future of health". |
+
+> You don't choose the layout with a variant suffix. The block detects the Our Impact grid by the presence of the gradient intro (`hero-impact`) block in the same section; anywhere else it renders as the white banner. To force one explicitly, ask engineering — the detection can be replaced with a named variant if needed.
+
+### Inserting the block
+
+1. Place your cursor where the card should go (for the banner, this is its own section; for the navy card, inside the Our Impact section alongside the intro and stats).
+2. Open **Insert → Block** and choose **Cards Promo**. The header row must read exactly **`Cards Promo`**.
+
+### Filling it in
+
+The block is a **single card = one table row with two columns**:
+
+| Column 1 (image) | Column 2 (content) |
+|---|---|
+| The card image (upload the real asset in da.live) | The category **eyebrow** as a plain paragraph on the first line (e.g. `COMMUNITIES` or `impact report`), then the **headline** as a heading, then optional **body copy** paragraph(s), then a **"Learn more" link** on its own line |
+
+- **First paragraph = eyebrow.** The block styles the first plain paragraph as the uppercase, letter-spaced label automatically. Put nothing else on that line.
+- **Headline:** author as a heading (`h2`/`h3`). It carries the title.
+- **Copy is optional** — the banner usage omits it; the navy card includes a sentence.
+- **CTA:** a single link (e.g. "Learn more"). The blue circled-arrow icon is added automatically — don't paste an SVG or add a button.
+- **External links** (`https://…`) open in a new tab automatically.
+
+### Notes
+
+- **Banner** hides its image on small phones and drops the shadow, so the text stays readable — this is automatic.
+- The **navy card** is positioned by the Our Impact section grid; you don't set its height or column — just author the content and it fills the right column.
+- Don't add more than one row — Cards Promo is a single card. For multiple side-by-side cards use **Cards** or **Cards Tile**.
+
+### Testing your change
+
+Preview and check both widths: `https://main--aemeds-medtronic--<org>.aem.page/en-us/`. The banner should be horizontal on tablet/desktop and stacked (image hidden) on phones; the navy card should sit in the right column of the Our Impact block.
+
+---
+
 ## Quick reference
 
 | Task | Where |
 |---|---|
 | Change logo, nav links, dropdowns, search/audience options | `/nav` fragment document |
 | Add a "latest stories" scroll rail | Insert **Cards Rail** block (2-column table: image, category+linked heading), preceded by eyebrow `<p>` + heading |
+| Add a featured promo (white banner or navy Our-Impact card) | Insert **Cards Promo** block (1 row, 2 cols: image, eyebrow+heading+copy+link); layout is chosen by section context |
 | Style a section light/dark | Insert **Section Metadata** block at the end of the section, key `style` |
 | Apply an eyebrow label | Type a plain `<p>` directly above the section heading — styled automatically |
 | Preview | `https://main--aemeds-medtronic--<org>.aem.page/...` |

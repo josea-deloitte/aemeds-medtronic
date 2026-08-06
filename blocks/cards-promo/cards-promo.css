@@ -1,49 +1,54 @@
 /* =========================================================
- * cards-promo — the navy "impact report" card
- * ("Unlocking the future of health"). Dark navy panel with
- * a photo on top, white eyebrow/headline/copy and a blue
- * arrow CTA. Placed by the Our-Impact section grid into the
- * right column, spanning the full section height.
+ * cards-promo — a promotional card with an image and a text
+ * block (eyebrow, headline, copy, arrowed CTA). Two variants,
+ * set by cards-promo.js from context:
+ *   .cards-promo-navy   → navy vertical card (Our Impact grid)
+ *   .cards-promo-banner → white horizontal banner (standalone)
  * ========================================================= */
-
-.cards-promo {
-  height: 100%;
-}
 
 .cards-promo > ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Navy vertical card — the Our-Impact "impact report" card.
+ * ------------------------------------------------------------------------- */
+
+.cards-promo-navy {
   height: 100%;
 }
 
-.cards-promo > ul > li {
+.cards-promo-navy > ul {
+  height: 100%;
+}
+
+.cards-promo-navy > ul > li {
   display: flex;
   flex-direction: column;
   height: 100%;
   background: #170f5f;
 }
 
-/* Photo at the top of the card. */
-.cards-promo .cards-promo-card-image {
+.cards-promo-navy .cards-promo-card-image {
   line-height: 0;
 }
 
-.cards-promo .cards-promo-card-image img {
+.cards-promo-navy .cards-promo-card-image img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 
-/* Text area. */
-.cards-promo .cards-promo-card-body {
+.cards-promo-navy .cards-promo-card-body {
   padding: 24px 22px 30px 30px;
   color: #fff;
 }
 
-.cards-promo .cards-promo-card-body h1,
-.cards-promo .cards-promo-card-body h2,
-.cards-promo .cards-promo-card-body h3 {
+.cards-promo-navy .cards-promo-card-body h1,
+.cards-promo-navy .cards-promo-card-body h2,
+.cards-promo-navy .cards-promo-card-body h3 {
   margin: 0 0 12px;
   color: #fff;
   font-weight: 700;
@@ -51,23 +56,21 @@
   line-height: 1.2;
 }
 
-.cards-promo .cards-promo-card-body p {
+.cards-promo-navy .cards-promo-card-body p {
   margin: 0 0 1rem;
   color: #fff;
   font-size: var(--body-font-size-xs);
   line-height: 1.5;
 }
 
-/* Eyebrow (first paragraph): uppercase, spaced. */
-.cards-promo .cards-promo-card-body p:first-child {
+.cards-promo-navy .cards-promo-card-body p:first-child {
   margin: 0 0 12px;
   font-weight: 500;
   letter-spacing: 1.29px;
   text-transform: uppercase;
 }
 
-/* Blue arrow CTA. */
-.cards-promo .cards-promo-card-body a:any-link {
+.cards-promo-navy .cards-promo-card-body a:any-link {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -76,11 +79,11 @@
   text-decoration: none;
 }
 
-.cards-promo .cards-promo-card-body a:hover {
+.cards-promo-navy .cards-promo-card-body a:hover {
   text-decoration: underline;
 }
 
-.cards-promo .cards-promo-card-body a:any-link::after {
+.cards-promo-navy .cards-promo-card-body a:any-link::after {
   content: '';
   flex: none;
   width: 26px;
@@ -91,10 +94,118 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
 }
 
+/* ---------------------------------------------------------------------------
+ * White horizontal banner — the standalone "Communities / Spark" banner.
+ * Image beside text on a white, shadowed card capped at 1087px.
+ * ------------------------------------------------------------------------- */
+
+.cards-promo-banner {
+  padding-top: 47px;
+}
+
+.cards-promo-banner > ul > li {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1087px;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 12%);
+  overflow: hidden;
+}
+
+.cards-promo-banner .cards-promo-card-image {
+  line-height: 0;
+}
+
+.cards-promo-banner .cards-promo-card-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.cards-promo-banner .cards-promo-card-body {
+  padding: 24px 32px;
+}
+
+/* Eyebrow (first paragraph): uppercase, spaced, dark navy. */
+.cards-promo-banner .cards-promo-card-body p:first-child {
+  display: inline-block;
+  margin: 0 0 0.5rem;
+  color: #170f5f;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+.cards-promo-banner .cards-promo-card-body h1,
+.cards-promo-banner .cards-promo-card-body h2,
+.cards-promo-banner .cards-promo-card-body h3 {
+  margin: 0 0 12px;
+  color: #1e1e1e;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.5;
+}
+
+.cards-promo-banner .cards-promo-card-body p:last-child {
+  margin: 0;
+}
+
+/* Blue arrowed "Learn more" CTA. */
+.cards-promo-banner .cards-promo-card-body a:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1010eb;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.cards-promo-banner .cards-promo-card-body a:hover {
+  text-decoration: underline;
+}
+
+.cards-promo-banner .cards-promo-card-body a:any-link::after {
+  content: '';
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #1010eb no-repeat center / 12px 12px;
+  box-shadow: inset 0 0 0 1px #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
+}
+
+/* Horizontal at desktop: image 40%, text fills the rest. */
+@media (width >= 600px) {
+  .cards-promo-banner > ul > li {
+    flex-direction: row;
+  }
+
+  .cards-promo-banner .cards-promo-card-image {
+    flex: 0 0 40%;
+  }
+
+  .cards-promo-banner .cards-promo-card-image img {
+    height: 100%;
+  }
+
+  .cards-promo-banner .cards-promo-card-body {
+    flex: 1;
+    align-self: center;
+    padding: 32px 48px;
+  }
+}
+
 @media (width >= 900px) {
-  .cards-promo .cards-promo-card-body h1,
-  .cards-promo .cards-promo-card-body h2,
-  .cards-promo .cards-promo-card-body h3 {
+  .cards-promo-navy .cards-promo-card-body h1,
+  .cards-promo-navy .cards-promo-card-body h2,
+  .cards-promo-navy .cards-promo-card-body h3 {
     font-size: 32px;
   }
 }
