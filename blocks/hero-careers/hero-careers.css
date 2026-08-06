@@ -1,8 +1,9 @@
 /* =========================================================
  * hero-careers — replicates medtronic.com id="Careers":
- * a full-bleed dark-blue photo banner. Left column holds the
- * eyebrow, headline, paragraph and primary CTA; the secondary
- * links sit in the top-right. White text over a dark scrim.
+ * a dark-navy (#00001c) full-width banner whose photo is
+ * capped at 1440px and centred. Left column holds the
+ * eyebrow, headline, paragraph and an arrowed "Join the
+ * team" CTA; the secondary links are pinned top-right.
  * ========================================================= */
 
 /* Full-bleed: escape the section's max-width/padding. */
@@ -12,22 +13,25 @@
   padding: 0;
 }
 
+/* Near-black navy backdrop behind the centred photo. */
 .hero-careers {
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  min-height: 460px;
+  min-height: 420px;
   padding: 48px 24px;
   color: #fff;
-  background: #0a1a4f;
+  background: #00001c;
 }
 
-/* Background photo fills the block. */
+/* Background photo: capped at 1440px and centred (matching the source, where
+   the image sits in a max-width band over the navy backdrop). */
 .hero-careers .hero-careers-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 1440px;
 }
 
 .hero-careers .hero-careers-bg picture,
@@ -35,23 +39,24 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
-/* Dark scrim: strongest on the left (behind the text), clearing to the right. */
+/* Left-weighted scrim so the text stays legible over the photo. */
 .hero-careers::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(90deg, rgb(6 16 60 / 92%) 0%, rgb(6 16 60 / 55%) 42%, rgb(6 16 60 / 10%) 100%);
+  background: linear-gradient(90deg, rgb(0 0 28 / 85%) 0%, rgb(0 0 28 / 45%) 40%, rgb(0 0 28 / 5%) 100%);
 }
 
-/* Content sits above the scrim, constrained to the page content column. */
+/* Content band above the scrim, matching the source's 1440px column. */
 .hero-careers .hero-careers-content {
   position: relative;
   z-index: 2;
   box-sizing: border-box;
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
   width: 100%;
 }
@@ -68,45 +73,46 @@
 .hero-careers .hero-careers-eyebrow {
   display: inline-block;
   margin: 0 0 20px;
-  padding-bottom: 18px;
+  padding-bottom: 21px;
   border-bottom: 1px solid rgb(255 255 255 / 35%);
-  font-size: var(--body-font-size-xs);
+  font-size: 12px;
   font-weight: 500;
+  line-height: 1.6;
   letter-spacing: 1.29px;
   text-transform: uppercase;
 }
 
-/* Headline. */
+/* Headline — 28px mobile / 52px desktop, bold. */
 .hero-careers h2 {
-  margin: 0 0 16px;
+  margin: 0 0 15px;
   max-width: 12ch;
   font-weight: 700;
-  font-size: 40px;
-  line-height: 1.05;
+  font-size: 28px;
+  line-height: 1.1;
 }
 
 /* Intro paragraph. */
 .hero-careers .hero-careers-content > p {
-  margin: 0 0 28px;
-  max-width: 30ch;
-  font-size: var(--body-font-size-s);
-  line-height: 1.45;
+  margin: 0 0 16px;
+  max-width: 34ch;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
-/* Shared circled-arrow chip used by the CTA and secondary links. */
+/* Shared circled-arrow chip (source uses a #4A7DFF disc, white outline+arrow). */
 .hero-careers .hero-careers-cta a::after,
 .hero-careers .hero-careers-links a::after {
   content: '';
   flex: none;
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: #1010eb no-repeat center / 14px 14px;
-  box-shadow: inset 0 0 0 1px #fff;
+  background: #4a7dff no-repeat center / 16px 16px;
+  box-shadow: inset 0 0 0 1.5px #fff;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
 }
 
-/* Primary CTA: bold label + circled arrow. */
+/* Primary CTA: bold white label + circled arrow (arrowed link, not a pill). */
 .hero-careers .hero-careers-cta {
   margin: 0;
 }
@@ -116,11 +122,11 @@
   align-items: center;
   gap: 12px;
   font-weight: 700;
-  font-size: var(--body-font-size-m);
+  font-size: 18px;
   text-decoration: none;
 }
 
-/* Secondary links: stacked, divided by a hairline. */
+/* Secondary links: stacked, divided by a hairline separator. */
 .hero-careers .hero-careers-links {
   margin-top: 28px;
 }
@@ -132,15 +138,17 @@
 .hero-careers .hero-careers-links a:any-link {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 0;
-  font-weight: 500;
+  gap: 20px;
+  padding: 12px 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
   text-decoration: none;
 }
 
 /* Fallback when no photo is authored. */
 .hero-careers.no-image {
-  background: linear-gradient(120deg, #0a1a4f 0%, #1010ab 100%);
+  background: linear-gradient(120deg, #00001c 0%, #1010ab 100%);
 }
 
 .hero-careers.no-image::after {
@@ -149,40 +157,47 @@
 
 @media (width >= 900px) {
   .hero-careers {
-    min-height: 620px;
-    padding: 72px 32px;
+    min-height: 600px;
+    padding: 69px 50px 50px 70px;
   }
 
-  /* Two-area layout: content column on the left, secondary links top-right. */
+  /* Left content column, narrow like the source (max ~400px). */
   .hero-careers .hero-careers-content {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: auto 1fr;
-    column-gap: 40px;
-    align-content: start;
+    position: static;
   }
 
   .hero-careers .hero-careers-eyebrow,
   .hero-careers h2,
   .hero-careers .hero-careers-content > p,
   .hero-careers .hero-careers-cta {
-    grid-column: 1;
+    max-width: 400px;
   }
 
   .hero-careers h2 {
-    font-size: 56px;
+    margin-top: 33px;
+    font-size: 52px;
   }
 
-  /* Secondary links pinned to the top-right, right-aligned. */
+  .hero-careers .hero-careers-content > p {
+    font-size: 20px;
+  }
+
+  .hero-careers .hero-careers-cta {
+    margin-top: 16px;
+  }
+
+  /* Secondary links pinned to the top-right (source: top 60px, right 50px). */
   .hero-careers .hero-careers-links {
-    grid-column: 2;
-    grid-row: 1 / 3;
+    position: absolute;
+    top: 60px;
+    right: 50px;
+    z-index: 2;
+    width: 230px;
     margin-top: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     text-align: right;
-    min-width: 240px;
   }
 
   .hero-careers .hero-careers-links a:any-link {
