@@ -25,9 +25,29 @@ export default function decorate(block) {
     ? [...ul.querySelectorAll(':scope > li a[href]')].map((a) => {
       try { return new URL(a.href, window.location.href).host; } catch { return ''; }
     }) : []);
-  if (onePerCard && hosts.size === 1 && ![...hosts][0].includes(window.location.hostname)) {
-    block.classList.add('cards-tile-jobs');
-  }
+  const externalHost = hosts.size === 1 && ![...hosts][0].includes(window.location.hostname);
+  const isJobs = onePerCard && externalHost;
+  if (isJobs) block.classList.add('cards-tile-jobs');
 
   block.replaceChildren(ul);
+
+  // Overlay the job tiles onto the bottom-right of a preceding careers hero, as
+  // on the source. The tiles are authored in their own section; if a hero-careers
+  // block exists earlier on the page, relocate them into it as an overlay. Done
+  // after decoration so the DOM is final; falls back to in-flow if no hero.
+  if (isJobs) {
+    const hero = document.querySelector('.hero-careers');
+    if (hero && !hero.querySelector('.cards-tile-jobs')) {
+      const wrapper = block.closest('.cards-tile-wrapper') || block;
+      hero.classList.add('has-jobs-overlay');
+      block.classList.add('cards-tile-jobs-overlay');
+      hero.append(block);
+      // Remove the now-empty wrapper/section left behind so no blank band remains.
+      if (wrapper !== block && !wrapper.children.length) {
+        const section = wrapper.closest('.section');
+        wrapper.remove();
+        if (section && !section.querySelector('.block')) section.remove();
+      }
+    }
+  }
 }

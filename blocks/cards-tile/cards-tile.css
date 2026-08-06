@@ -98,3 +98,35 @@
     font-size: var(--body-font-size-s);
   }
 }
+
+/* --- Overlay on the careers hero (desktop) ---------------------------------
+   When cards-tile.js relocates the job tiles into a .hero-careers block, they
+   sit at the bottom-right of the hero's centred 1440px band, above the scrim.
+   On mobile they fall back to normal flow (full-width row, handled above). */
+.hero-careers .cards-tile-jobs-overlay > ul {
+  max-width: none;
+  gap: 2px;
+}
+
+@media (width >= 900px) {
+  .hero-careers .cards-tile-jobs-overlay {
+    position: absolute;
+    z-index: 3;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1440px;
+    padding: 0 50px;
+    box-sizing: border-box;
+    pointer-events: none;
+  }
+
+  .hero-careers .cards-tile-jobs-overlay > ul {
+    width: 621px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: 0;
+    pointer-events: auto;
+  }
+}
