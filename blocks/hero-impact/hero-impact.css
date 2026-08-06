@@ -5,26 +5,23 @@
  * headline, white body copy, and a "Learn more" CTA.
  * ========================================================= */
 
+/* The gradient card is a contained panel (not full-bleed): it aligns to the
+   page content column so its left edge lines up with the stat cards below. */
 .hero-impact-container .hero-impact-wrapper {
-  max-width: unset;
-  padding: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
 .hero-impact {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  padding: 22px 23px 40px;
+  padding: 40px 32px 48px;
 
   /* Exact source gradient (linear-gradient 105deg, magenta → purple). */
   background-color: #ac0460;
   background-image: linear-gradient(105deg, rgb(218 8 123 / 0%) 0%, #ac0460 51.75%, #9747ff 99.51%);
-}
-
-/* Content column, constrained like the source card. */
-.hero-impact > div {
-  max-width: 1087px;
-  margin: 0 auto;
 }
 
 /* All copy is white on the gradient — override the base .no-image dark rule. */
@@ -98,11 +95,12 @@
 
 @media (width >= 900px) {
   .hero-impact {
-    padding: 40px 32px;
+    padding: 56px 56px 64px;
   }
 
   .hero-impact h1,
   .hero-impact h2 {
+    max-width: 720px;
     font-size: 47px;
     line-height: 1.2;
   }
