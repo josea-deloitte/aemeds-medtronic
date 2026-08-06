@@ -314,6 +314,13 @@ main > .section:first-of-type {
   margin-top: 0;
 }
 
+/* Full-bleed careers hero: its inner wrapper carries no max-width/padding. */
+main > .section.hero-careers-container > div {
+  max-width: unset;
+  margin: 0;
+  padding: 0;
+}
+
 @media (width >= 900px) {
   main > .section > div {
     padding: 0 32px;
@@ -388,4 +395,13 @@ main .section.dark h5,
 main .section.dark h6,
 main .section.dark p {
   color: #fff;
+}
+
+/* "Careers" full-bleed hero: the hero-careers block owns its own dark photo
+   background, so the section must be edge-to-edge with no padding/margin bands.
+   Declared after ".section.dark" so it wins even when that style is applied. */
+main > .section.hero-careers-container {
+  max-width: unset;
+  margin: 0;
+  padding: 0;
 }
