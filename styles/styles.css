@@ -320,6 +320,47 @@ main > .section:first-of-type {
   }
 }
 
+/* "Our Impact" composite section: a single grid tying the gradient intro card
+   (hero-impact), the stat cards (cards-impact) and the navy promo card
+   (cards-promo) into the source's layout — gradient top-left, stats below it,
+   navy card spanning the full height on the right. */
+main > .section.hero-impact-container.cards-impact-container.cards-promo-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+main > .section.hero-impact-container.cards-impact-container.cards-promo-container > div {
+  max-width: unset;
+  margin: 0;
+  padding: 0;
+}
+
+@media (width >= 900px) {
+  main > .section.hero-impact-container.cards-impact-container.cards-promo-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 0;
+    padding: 0 32px;
+  }
+
+  main > .section.hero-impact-container.cards-impact-container.cards-promo-container > .hero-impact-wrapper {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  main > .section.hero-impact-container.cards-impact-container.cards-promo-container > .cards-impact-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  main > .section.hero-impact-container.cards-impact-container.cards-promo-container > .cards-promo-wrapper {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+}
+
 /* section metadata */
 main .section.light,
 main .section.highlight {

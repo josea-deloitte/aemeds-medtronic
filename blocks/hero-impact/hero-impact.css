@@ -1,22 +1,20 @@
 /* =========================================================
- * hero-impact — replicates the Medtronic homepage
- * id="Our-Impact" intro card: a magenta→purple gradient
- * panel with a white eyebrow (underlined), large white
- * headline, white body copy, and a "Learn more" CTA.
+ * hero-impact — the magenta→purple gradient "Our Impact"
+ * intro card. It is placed by the Our-Impact section grid
+ * (see styles.css: .hero-impact-container.cards-impact-container)
+ * into the top-left area, spanning the stat columns.
  * ========================================================= */
 
-/* The gradient card is a contained panel (not full-bleed): it aligns to the
-   page content column so its left edge lines up with the stat cards below. */
 .hero-impact-container .hero-impact-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
+  max-width: unset;
+  padding: 0;
 }
 
 .hero-impact {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
+  height: 100%;
   padding: 40px 32px 48px;
 
   /* Exact source gradient (linear-gradient 105deg, magenta → purple). */
@@ -80,8 +78,7 @@
   text-decoration: underline;
 }
 
-/* Arrow chip after the CTA, matching the source's circled arrow icon
-   (blue disc, white outline, white right-pointing arrow drawn with an SVG). */
+/* Arrow chip after the CTA, matching the source's circled arrow icon. */
 .hero-impact a:any-link::after {
   content: '';
   flex: none;
@@ -95,12 +92,12 @@
 
 @media (width >= 900px) {
   .hero-impact {
-    padding: 56px 56px 64px;
+    padding: 48px 48px 56px;
   }
 
   .hero-impact h1,
   .hero-impact h2 {
-    max-width: 720px;
+    max-width: 560px;
     font-size: 47px;
     line-height: 1.2;
   }

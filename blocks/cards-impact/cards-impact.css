@@ -1,27 +1,84 @@
+/* =========================================================
+ * cards-impact — the three "Our Impact" stat cards
+ * ($64M / 2.5M+ / 60%). White cards, thin blue numbers,
+ * animated icon on top. Placed by the Our-Impact section
+ * grid into the bottom-left area (below the gradient card).
+ * ========================================================= */
+
+.cards-impact {
+  background: #fff;
+}
+
 .cards-impact > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
 }
 
 .cards-impact > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px 32px;
+  background: #fff;
 }
 
-.cards-impact .cards-impact-card-body {
-  margin: 16px;
+/* The link-only "Impact Report FY25" cell sits as a right-aligned footer
+   spanning the row, matching the source (bottom-right under the 60% stat). */
+.cards-impact > ul > li:last-child:not(:has(.cards-impact-card-image)) {
+  grid-column: 1 / -1;
+  align-items: flex-end;
+  padding-top: 0;
 }
 
+/* Animated stat icon. */
 .cards-impact .cards-impact-card-image {
   line-height: 0;
+  margin-bottom: 12px;
 }
 
-.cards-impact > ul > li img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+.cards-impact .cards-impact-card-image img {
+  width: 66px;
+  height: 66px;
+  object-fit: contain;
+}
+
+/* The big thin blue number. */
+.cards-impact .cards-impact-card-body h1,
+.cards-impact .cards-impact-card-body h2,
+.cards-impact .cards-impact-card-body h3 {
+  margin: 0 0 8px;
+  color: #1010eb;
+  font-weight: 200;
+  font-size: 48px;
+  line-height: 1.1;
+}
+
+/* Sub-label under the number. */
+.cards-impact .cards-impact-card-body p {
+  margin: 0;
+  color: #170f5f;
+  font-size: var(--body-font-size-xs);
+  line-height: 1.35;
+}
+
+/* A stat card that only contains a link (the "Impact Report FY25" cell). */
+.cards-impact .cards-impact-card-body a:any-link {
+  color: #4a7dff;
+  font-size: var(--body-font-size-xs);
+  font-style: italic;
+}
+
+@media (width >= 900px) {
+  .cards-impact .cards-impact-card-body h1,
+  .cards-impact .cards-impact-card-body h2,
+  .cards-impact .cards-impact-card-body h3 {
+    font-size: 72px;
+  }
+
+  .cards-impact .cards-impact-card-body p {
+    font-size: var(--body-font-size-s);
+  }
 }
