@@ -23,4 +23,20 @@ export default function decorate(block) {
       }
     });
   });
+
+  // Tag the text column (the one without media) so it can overlap the media on
+  // desktop, and mark its eyebrow (first paragraph with no link) + CTA.
+  [...block.children].forEach((row) => {
+    [...row.children].forEach((col) => {
+      if (col.classList.contains('columns-media-img-col')) return;
+      col.classList.add('columns-media-text-col');
+      const firstP = col.querySelector(':scope > p');
+      if (firstP && !firstP.querySelector('a')) firstP.classList.add('columns-media-eyebrow');
+      const ctaP = [...col.querySelectorAll(':scope > p')].find((p) => {
+        const a = p.querySelector(':scope > a');
+        return a && p.textContent.trim() === a.textContent.trim();
+      });
+      if (ctaP) ctaP.classList.add('columns-media-cta');
+    });
+  });
 }

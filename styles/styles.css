@@ -321,9 +321,30 @@ main > .section.hero-careers-container > div {
   padding: 0;
 }
 
+/* "Who we are" section (columns-media + cards-stat): full-bleed dark band with
+   content capped at 1440px. position:relative anchors the stats info-bar that
+   cards-stat.js overlays onto the media column. */
+main > .section.columns-media-container.cards-stat-container {
+  position: relative;
+  max-width: 1440px;
+  margin: 20px auto 0;
+  padding: 0;
+}
+
+main > .section.columns-media-container.cards-stat-container > div {
+  max-width: unset;
+  margin: 0;
+  padding: 0 24px;
+}
+
 @media (width >= 900px) {
   main > .section > div {
     padding: 0 32px;
+  }
+
+  /* Who-we-are: source inner padding 80px 59px 60px. */
+  main > .section.columns-media-container.cards-stat-container > div {
+    padding: 80px 59px 60px;
   }
 }
 

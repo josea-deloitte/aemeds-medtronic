@@ -1,10 +1,21 @@
+/* =========================================================
+ * columns-media — replicates medtronic.com id="who-we-are":
+ * a dark (#1e1e1e) text + media split. Left text column
+ * (eyebrow, 52px headline, copy, blue arrowed CTA) overlaps
+ * the right media column (video) on desktop. The stats
+ * info-bar is relocated onto the video by cards-stat.js.
+ * ========================================================= */
+
 .columns-media > div {
   display: flex;
   flex-direction: column;
+  gap: 24px;
 }
 
-.columns-media img {
+.columns-media img,
+.columns-media video {
   width: 100%;
+  display: block;
 }
 
 .columns-media > div > div {
@@ -15,19 +26,113 @@
   order: 0;
 }
 
-.columns-media > div > .columns-media-img-col img {
+/* Text column colours (section is dark). */
+.columns-media .columns-media-text-col h2,
+.columns-media .columns-media-text-col p {
+  color: #fff;
+}
+
+.columns-media .columns-media-text-col h2 {
+  margin: 12px 0 16px;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.columns-media .columns-media-text-col > p {
+  margin: 0 0 16px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Eyebrow: uppercase, spaced, translucent white, hairline underline. */
+.columns-media .columns-media-eyebrow {
+  position: relative;
   display: block;
+  margin: 0;
+  padding-bottom: 21px;
+  color: rgb(255 255 255 / 70%);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 1.29px;
+  text-transform: uppercase;
+}
+
+.columns-media .columns-media-eyebrow::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 192px;
+  height: 1px;
+  background: rgb(255 255 255 / 35%);
+}
+
+/* Blue arrowed "Learn more" CTA. */
+.columns-media .columns-media-cta {
+  margin: 0;
+}
+
+.columns-media .columns-media-cta a:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #4a7dff;
+  font-weight: 500;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.columns-media .columns-media-cta a:hover {
+  color: #87b2ff;
+}
+
+.columns-media .columns-media-cta a::after {
+  content: '';
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #4a7dff no-repeat center / 16px 16px;
+  box-shadow: inset 0 0 0 1.5px #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
 }
 
 @media (width >= 900px) {
   .columns-media > div {
-    align-items: center;
+    align-items: flex-end;
     flex-direction: unset;
-    gap: 24px;
+    gap: 0;
   }
 
   .columns-media > div > div {
-    flex: 1;
     order: unset;
+  }
+
+  /* Text column: narrower, top-aligned, overlapping the media (source: -95px). */
+  .columns-media .columns-media-text-col {
+    flex: 1;
+    align-self: flex-start;
+    position: relative;
+    z-index: 2;
+    margin-right: -95px;
+  }
+
+  /* Media column: wider. */
+  .columns-media .columns-media-img-col {
+    flex: 2;
+    position: relative;
+  }
+
+  .columns-media .columns-media-text-col h2 {
+    margin-top: 33px;
+    font-size: 52px;
+    line-height: 1.1;
+  }
+
+  .columns-media .columns-media-text-col > p {
+    max-width: 304px;
+    font-size: 20px;
   }
 }
