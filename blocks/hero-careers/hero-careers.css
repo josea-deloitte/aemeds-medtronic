@@ -161,11 +161,9 @@
     padding: 69px 50px 50px 70px;
   }
 
-  /* Left content column, narrow like the source (max ~400px). */
-  .hero-careers .hero-careers-content {
-    position: static;
-  }
-
+  /* Left content column, narrow like the source (max ~400px). Keep it as the
+     positioning context (position:relative + z-index from the base rule) so the
+     text and CTA stay ABOVE the scrim; the secondary links pin to its top-right. */
   .hero-careers .hero-careers-eyebrow,
   .hero-careers h2,
   .hero-careers .hero-careers-content > p,
@@ -186,12 +184,13 @@
     margin-top: 16px;
   }
 
-  /* Secondary links pinned to the top-right (source: top 60px, right 50px). */
+  /* Secondary links pinned to the content column's top-right. The column is the
+     positioning context; top/right are 0 because the block padding (69px top /
+     50px right) already provides the source's inset from the hero edge. */
   .hero-careers .hero-careers-links {
     position: absolute;
-    top: 60px;
-    right: 50px;
-    z-index: 2;
+    top: 0;
+    right: 0;
     width: 230px;
     margin-top: 0;
     display: flex;
