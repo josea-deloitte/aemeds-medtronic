@@ -16,7 +16,18 @@ export default async function decorate(block) {
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
+  // EDS wraps a section's default content in a ".default-content-wrapper", which
+  // nests the real <p>/<ul> one level deeper and breaks the block's grid/flex
+  // layouts. Flatten every wrapper so each group's content are direct children.
+  footer.querySelectorAll('.default-content-wrapper').forEach((dcw) => {
+    while (dcw.firstChild) dcw.parentNode.insertBefore(dcw.firstChild, dcw);
+    dcw.remove();
+  });
+
   const groups = [...footer.children];
+
+  // After flattening, group content are direct children of the group div.
+  const contentRoot = (group) => group;
 
   // Group 1: primary link columns (three <ul>s)
   const [linksGroup, brandGroup, legalGroup] = groups;
@@ -28,11 +39,12 @@ export default async function decorate(block) {
   // Group 2: brand + social + legal-links band
   if (brandGroup) {
     brandGroup.classList.add('footer-brand');
-    const paras = [...brandGroup.querySelectorAll(':scope > p')];
+    const brandRoot = contentRoot(brandGroup);
+    const paras = [...brandRoot.querySelectorAll(':scope > p')];
     // first paragraph holds the logo image, second the tagline
     if (paras[0] && paras[0].querySelector('img')) paras[0].classList.add('footer-logo');
     if (paras[1]) paras[1].classList.add('footer-tagline');
-    const uls = [...brandGroup.querySelectorAll(':scope > ul')];
+    const uls = [...brandRoot.querySelectorAll(':scope > ul')];
     if (uls[0]) {
       uls[0].classList.add('footer-social');
       // external social links open in a new tab
