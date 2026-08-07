@@ -11,6 +11,7 @@ import heroFeatureParser from './parsers/hero-feature.js';
 import heroImpactParser from './parsers/hero-impact.js';
 import cardsImpactParser from './parsers/cards-impact.js';
 import heroCareersParser from './parsers/hero-careers.js';
+import heroInvestorsParser from './parsers/hero-investors.js';
 import cardsTileParser from './parsers/cards-tile.js';
 
 // TRANSFORMER IMPORTS
@@ -29,6 +30,7 @@ const parsers = {
   'hero-impact': heroImpactParser,
   'cards-impact': cardsImpactParser,
   'hero-careers': heroCareersParser,
+  'hero-investors': heroInvestorsParser,
   'cards-tile': cardsTileParser,
 };
 
@@ -47,6 +49,7 @@ const PAGE_TEMPLATE = {
     { name: 'hero-impact', instances: ['#Our-Impact .our-impact-card'] },
     { name: 'cards-impact', instances: ['#Our-Impact .our-impact-stats'] },
     { name: 'hero-careers', instances: ['.wrapper-careers-section .careers-section'] },
+    { name: 'hero-investors', instances: ['.wrapper-investors-section .investors-section'] },
     { name: 'cards-tile', instances: ['.careers-jobs', '.investors-icons'] },
   ],
   sections: [
@@ -58,7 +61,7 @@ const PAGE_TEMPLATE = {
     { id: 'featured-story', name: 'Featured story band', selector: 'div.migration:nth-of-type(5)', style: 'dark', blocks: ['hero-feature'], defaultContent: [] },
     { id: 'our-impact', name: 'Our Impact', selector: '#Our-Impact', style: null, blocks: ['hero-impact', 'cards-impact', 'cards-promo'], defaultContent: [] },
     { id: 'careers', name: 'Careers that change lives', selector: 'div.migration:nth-of-type(7)', style: 'dark', blocks: ['hero-careers', 'cards-tile'], defaultContent: [] },
-    { id: 'investors', name: 'Shareholders spotlight', selector: ['#container-360f186c87', 'div.container.responsivegrid:nth-of-type(3)'], style: 'light', blocks: ['cards-tile'], defaultContent: ['.investors-content .eyebrow', '.investors-content h2'] },
+    { id: 'investors', name: 'Shareholders spotlight', selector: ['#container-360f186c87', 'div.container.responsivegrid:nth-of-type(3)'], style: 'light', blocks: ['hero-investors', 'cards-tile'], defaultContent: [] },
     { id: 'footer', name: 'Footer', selector: 'body > footer', style: 'dark', blocks: ['footer'], defaultContent: [] },
   ],
 };

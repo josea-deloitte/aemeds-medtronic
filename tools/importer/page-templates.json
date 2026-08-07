@@ -70,6 +70,12 @@
           ]
         },
         {
+          "name": "hero-investors",
+          "instances": [
+            ".wrapper-investors-section .investors-section"
+          ]
+        },
+        {
           "name": "cards-tile",
           "instances": [
             ".careers-jobs",
@@ -198,12 +204,10 @@
           ],
           "style": "light",
           "blocks": [
+            "hero-investors",
             "cards-tile"
           ],
-          "defaultContent": [
-            ".investors-content .eyebrow",
-            ".investors-content h2"
-          ]
+          "defaultContent": []
         },
         {
           "id": "footer",

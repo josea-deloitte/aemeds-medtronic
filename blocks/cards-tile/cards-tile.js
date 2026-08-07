@@ -14,40 +14,37 @@ export default function decorate(block) {
   });
   ul.querySelectorAll('picture > img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
 
-  // "Jobs" variant (e.g. the careers job tiles): every card is a single link and
-  // they all resolve to the same single external host (a jobs/apply destination).
-  // These render as translucent blue tiles rather than bordered white cards.
-  // Detected from content — no hardcoded labels — so the sibling Investor tiles
-  // (which mix the current host with an external one) keep the default styling.
-  const cards = [...ul.children];
-  const onePerCard = cards.length >= 2 && cards.every((li) => li.querySelectorAll('a[href]').length === 1);
-  const hosts = new Set(ul.querySelectorAll(':scope > li a[href]').length
-    ? [...ul.querySelectorAll(':scope > li a[href]')].map((a) => {
-      try { return new URL(a.href, window.location.href).host; } catch { return ''; }
-    }) : []);
-  const externalHost = hosts.size === 1 && ![...hosts][0].includes(window.location.hostname);
-  const isJobs = onePerCard && externalHost;
-  if (isJobs) block.classList.add('cards-tile-jobs');
-
   block.replaceChildren(ul);
 
-  // Overlay the job tiles onto the bottom-right of a preceding careers hero, as
-  // on the source. The tiles are authored in their own section; if a hero-careers
-  // block exists earlier on the page, relocate them into it as an overlay. Done
-  // after decoration so the DOM is final; falls back to in-flow if no hero.
-  if (isJobs) {
-    const hero = document.querySelector('.hero-careers');
-    if (hero && !hero.querySelector('.cards-tile-jobs')) {
-      const wrapper = block.closest('.cards-tile-wrapper') || block;
-      hero.classList.add('has-jobs-overlay');
-      block.classList.add('cards-tile-jobs-overlay');
-      hero.append(block);
-      // Remove the now-empty wrapper/section left behind so no blank band remains.
-      if (wrapper !== block && !wrapper.children.length) {
-        const section = wrapper.closest('.section');
-        wrapper.remove();
-        if (section && !section.querySelector('.block')) section.remove();
-      }
+  // ------------------------------------------------------------------------
+  // "Tiles-over-hero" pattern (careers job tiles / investor icon tiles):
+  // small icon+label tiles authored in their own section that the source
+  // overlays on the bottom-right of a full-bleed hero. When this block shares
+  // a section with a hero-careers or hero-investors block, render it as
+  // translucent blue tiles and relocate it onto that hero as an overlay.
+  // Detected from structure/context — no hardcoded labels.
+  // ------------------------------------------------------------------------
+  const cards = [...ul.children];
+  const onePerCard = cards.length >= 2 && cards.every((li) => li.querySelectorAll('a[href]').length === 1);
+
+  const section = block.closest('.section');
+  // The hero this tile row belongs to — strictly its OWN section, so the careers
+  // tiles and investor tiles each land on their respective hero (never the wrong one).
+  const hero = section && section.querySelector('.hero-careers, .hero-investors');
+
+  if (onePerCard && hero && !hero.querySelector('.cards-tile-tiles')) {
+    const wrapper = block.closest('.cards-tile-wrapper') || block;
+    block.classList.add('cards-tile-tiles', 'cards-tile-tiles-overlay');
+    hero.classList.add('has-tiles-overlay');
+    hero.append(block);
+    // Remove the now-empty wrapper/section left behind so no blank band remains.
+    if (wrapper !== block && !wrapper.children.length) {
+      const emptySection = wrapper.closest('.section');
+      wrapper.remove();
+      if (emptySection && !emptySection.querySelector('.block')) emptySection.remove();
     }
+  } else if (onePerCard) {
+    // No hero to overlay (e.g. standalone tile row) — still render as blue tiles.
+    block.classList.add('cards-tile-tiles');
   }
 }

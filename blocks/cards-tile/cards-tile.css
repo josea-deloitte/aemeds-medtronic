@@ -27,21 +27,22 @@
 }
 
 /* =========================================================
- * "Jobs" variant (.cards-tile-jobs) — the careers job tiles
- * (Sales / Engineering / IT). Translucent blue tiles with a
- * white inverted icon above the label, matching the source
- * overlay on the careers banner. Set by cards-tile.js when
- * every tile links to a single external jobs host.
+ * "Tiles" variant (.cards-tile-tiles) — small icon+label tiles
+ * that overlay a hero's bottom-right: the careers job tiles
+ * (Sales / Engineering / IT) and the investor icon tiles
+ * (Stock info / Company highlights / Upcoming events).
+ * Translucent blue tiles with a white inverted icon above the
+ * label. Set by cards-tile.js from context.
  * ========================================================= */
 
-.cards-tile-jobs > ul {
+.cards-tile-tiles > ul {
   gap: 2px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   max-width: 640px;
 }
 
 /* Each tile: a centred column with the white icon above the label. */
-.cards-tile-jobs > ul > li {
+.cards-tile-tiles > ul > li {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,22 +51,22 @@
   min-height: 96px;
   padding: 16px;
   border: 0;
-  background-color: rgb(74 125 255 / 90%);
+  background-color: rgb(16 16 235 / 90%);
   opacity: 0.85;
   transition: opacity 0.3s ease, background-color 0.3s ease;
 }
 
-.cards-tile-jobs > ul > li:hover {
+.cards-tile-tiles > ul > li:hover {
   opacity: 1;
   background-color: #4a7dff;
 }
 
 /* Label link. */
-.cards-tile-jobs .cards-tile-card-body {
+.cards-tile-tiles .cards-tile-card-body {
   margin: 0;
 }
 
-.cards-tile-jobs > ul > li a:any-link {
+.cards-tile-tiles > ul > li a:any-link {
   color: #fff;
   font-weight: 500;
   font-size: var(--body-font-size-xs);
@@ -74,13 +75,13 @@
 }
 
 /* Icon: inverted to white, sits above the label. */
-.cards-tile-jobs .cards-tile-card-image {
+.cards-tile-tiles .cards-tile-card-image {
   margin: 0;
   line-height: 0;
   order: -1;
 }
 
-.cards-tile-jobs .cards-tile-card-image img {
+.cards-tile-tiles .cards-tile-card-image img {
   width: 32px;
   height: 32px;
   aspect-ratio: auto;
@@ -89,27 +90,29 @@
   transition: transform 0.3s ease;
 }
 
-.cards-tile-jobs > ul > li:hover .cards-tile-card-image img {
+.cards-tile-tiles > ul > li:hover .cards-tile-card-image img {
   transform: scale(1.1);
 }
 
 @media (width >= 900px) {
-  .cards-tile-jobs > ul > li a:any-link {
+  .cards-tile-tiles > ul > li a:any-link {
     font-size: var(--body-font-size-s);
   }
 }
 
-/* --- Overlay on the careers hero (desktop) ---------------------------------
-   When cards-tile.js relocates the job tiles into a .hero-careers block, they
-   sit at the bottom-right of the hero's centred 1440px band, above the scrim.
+/* --- Overlay on the careers/investors hero (desktop) -----------------------
+   When cards-tile.js relocates the tiles into a .hero-careers or .hero-investors
+   block, they sit at the bottom-right of the hero's centred 1440px band.
    On mobile they fall back to normal flow (full-width row, handled above). */
-.hero-careers .cards-tile-jobs-overlay > ul {
+.hero-careers .cards-tile-tiles-overlay > ul,
+.hero-investors .cards-tile-tiles-overlay > ul {
   max-width: none;
   gap: 2px;
 }
 
 @media (width >= 900px) {
-  .hero-careers .cards-tile-jobs-overlay {
+  .hero-careers .cards-tile-tiles-overlay,
+  .hero-investors .cards-tile-tiles-overlay {
     position: absolute;
     z-index: 3;
     bottom: 50px;
@@ -122,7 +125,8 @@
     pointer-events: none;
   }
 
-  .hero-careers .cards-tile-jobs-overlay > ul {
+  .hero-careers .cards-tile-tiles-overlay > ul,
+  .hero-investors .cards-tile-tiles-overlay > ul {
     width: 621px;
     max-width: 100%;
     margin-left: auto;

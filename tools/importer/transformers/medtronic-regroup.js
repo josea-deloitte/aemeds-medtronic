@@ -21,6 +21,9 @@
  *                .our-impact-card (hero-impact) and .access-card (cards-promo) stay put.
  *   careers    : .careers-jobs is lifted out of .careers-section to be its own sibling
  *                so hero-careers (which replaces .careers-section) no longer eats it.
+ *   investors  : .investors-icons is lifted out of .investors-section to be its own
+ *                sibling so hero-investors (which replaces .investors-section) no
+ *                longer eats it (mirrors the careers rule).
  */
 export default function transform(hookName, element, payload) {
   if (hookName !== 'beforeTransform') return;
@@ -63,5 +66,12 @@ export default function transform(hookName, element, payload) {
   if (careers) {
     const jobs = careers.querySelector('.careers-jobs');
     if (jobs) careers.after(jobs);
+  }
+
+  // --- investors: lift .investors-icons out of .investors-section to be a sibling ---
+  const investors = element.querySelector('.investors-section');
+  if (investors) {
+    const icons = investors.querySelector('.investors-icons');
+    if (icons) investors.after(icons);
   }
 }

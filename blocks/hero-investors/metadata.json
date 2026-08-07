@@ -1,0 +1,42 @@
+{
+  "variantName": "hero-investors",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-08-07T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.medtronic.com/en-us/index.html",
+    "originPage": "homepage Shareholders spotlight",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "text-over-image",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "eyebrow + H2 + paragraph + primary CTA + 2 secondary links over a light swirl background photo; investor icon tiles overlaid bottom-right",
+    "buttonCount": 3,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "light text/CTA clusters over a subtle full-bleed background",
+      "investor / corporate promo banners"
+    ],
+    "notSuitableFor": [
+      "dark photo heroes (use hero-careers)",
+      "grids of items"
+    ]
+  },
+  "usage": {
+    "pagesUsing": [
+      "/en-us/index"
+    ],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-07T00:00:00.000Z",
+    "sectionsUsing": [
+      "investors"
+    ]
+  }
+}

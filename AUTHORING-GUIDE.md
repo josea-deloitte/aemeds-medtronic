@@ -1,6 +1,6 @@
 # Authoring Guide (da.live)
 
-This guide is for content editors authoring the Medtronic site in **da.live**. It covers the blocks reworked to match the original medtronic.com design: the global **header/navigation**, the **Cards Rail** ("Innovation in action" story rail), the **Cards Promo** featured card (white banner / navy Our-Impact card), the **Hero Video** top-of-page hero, and the **Hero Feature** featured-story CTA band.
+This guide is for content editors authoring the Medtronic site in **da.live**. It covers the blocks reworked to match the original medtronic.com design: the global **header/navigation**, the **Cards Rail** ("Innovation in action" story rail), the **Cards Promo** featured card (white banner / navy Our-Impact card), the **Hero Video** top-of-page hero, the **Hero Feature** featured-story CTA band, and the **Hero Investors** "Shareholders spotlight" banner.
 
 ---
 
@@ -234,6 +234,45 @@ Preview and check both widths: `https://main--aemeds-medtronic--<org>.aem.page/e
 
 ---
 
+## 6. Hero Investors block (Shareholders spotlight)
+
+### What it's for
+
+The light "Shareholders spotlight" banner: a category eyebrow and navy headline on the left over a subtle swirl background, a short description and a blue "Learn more" CTA, two secondary links in the top-right, and the investor **icon tiles** (Stock info / Company highlights / Upcoming events) overlaid on the bottom-right. It is the **light-theme twin of Hero Careers** — same structure and authoring, different palette (chosen automatically by the block, no variant to type).
+
+### Inserting the block
+
+1. Place your cursor where the banner should go (its own section).
+2. Open **Insert → Block** and choose **Hero Investors**. The header row must read exactly **`Hero Investors`**.
+3. The banner needs the background swirl and the icon tiles — see below.
+
+### Filling it in
+
+Hero Investors is the standard **Hero** table (1 column, 3 rows):
+
+| Row | Cell contents |
+|---|---|
+| **Row 2 — background image** | The swirl/particle background image. |
+| **Row 3 — content** | The **eyebrow** as a plain paragraph (`Investors`), the **headline** as a heading (`Shareholders spotlight`), a short **description** paragraph, the **primary CTA** link ("Learn more") on its own line, then the **secondary links** ("Read the latest quarterly earnings", "See our quarterly results"), each on its own line. |
+
+Then, **immediately after the Hero Investors block in the same section**, add a **Cards Tile** block with the three icon tiles (Stock info / Company highlights / Upcoming events — icon image + label link per row). The site automatically:
+
+- Styles those tiles as translucent **blue tiles** with white icons.
+- **Overlays them onto the bottom-right** of the Hero Investors banner on desktop (they fall back to a normal row on mobile).
+
+### Notes / behavior
+
+- **First paragraph = eyebrow** (styled automatically). The first link after the copy is the **primary CTA**; the rest become the **top-right secondary links** — same rule as Hero Careers.
+- The blue circled-arrow icon on every link is added automatically — don't paste SVGs.
+- Palette is automatic: light background, navy `#170F5F` headline, blue `#1010EB` links. (Hero Careers is the dark-photo version; use that for careers-style banners.)
+- **External links** (`https://…`) open in a new tab automatically.
+
+### Testing your change
+
+Preview and check both widths: `https://main--aemeds-medtronic--<org>.aem.page/en-us/`. On desktop the icon tiles should sit over the banner's bottom-right; on mobile everything stacks.
+
+---
+
 ## Quick reference
 
 | Task | Where |
@@ -241,6 +280,7 @@ Preview and check both widths: `https://main--aemeds-medtronic--<org>.aem.page/e
 | Change logo, nav links, dropdowns, search/audience options | `/nav` fragment document |
 | Add a top-of-page video hero | Insert **Hero Video** block (row 1: `.mp4` URL link; row 2: eyebrow + heading + copy + cutout image + link) |
 | Add a dark featured-story CTA band | Insert **Hero Feature** block (eyebrow + heading + copy + link), apply `dark` section style |
+| Add the light "Shareholders spotlight" banner | Insert **Hero Investors** block (bg image + eyebrow/heading/copy/primary link/secondary links), then a **Cards Tile** block (icon tiles) in the same section |
 | Add a "latest stories" scroll rail | Insert **Cards Rail** block (2-column table: image, category+linked heading), preceded by eyebrow `<p>` + heading |
 | Add a featured promo (white banner or navy Our-Impact card) | Insert **Cards Promo** block (1 row, 2 cols: image, eyebrow+heading+copy+link); layout is chosen by section context |
 | Style a section light/dark | Insert **Section Metadata** block at the end of the section, key `style` |

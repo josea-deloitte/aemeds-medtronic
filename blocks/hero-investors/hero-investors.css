@@ -1,0 +1,213 @@
+/* =========================================================
+ * hero-investors — replicates medtronic.com's
+ * ".wrapper-investors-section" ("Shareholders spotlight"):
+ * a light full-width banner over a subtle swirl background,
+ * capped at 1440px. Left column holds the eyebrow, navy
+ * headline, paragraph and a blue "Learn more" CTA; the
+ * secondary links are pinned top-right. Structurally the
+ * light-theme twin of hero-careers.
+ * ========================================================= */
+
+/* Full-bleed: escape the section's max-width/padding. */
+.hero-investors-container .hero-investors-wrapper {
+  max-width: unset;
+  margin: 0;
+  padding: 0;
+}
+
+/* Light backdrop behind the centred swirl image. */
+.hero-investors {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-height: 420px;
+  padding: 48px 24px;
+  color: #170f5f;
+  background: #eaeaea;
+}
+
+/* Background swirl image: capped at 1440px and centred. */
+.hero-investors .hero-investors-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0 auto;
+  max-width: 1440px;
+}
+
+.hero-investors .hero-investors-bg picture,
+.hero-investors .hero-investors-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Light left-weighted scrim so the text stays legible over the swirl. */
+.hero-investors::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgb(238 238 238 / 85%) 0%, rgb(238 238 238 / 40%) 45%, rgb(238 238 238 / 0%) 100%);
+}
+
+/* Content band above the scrim, matching the source's 1440px column. */
+.hero-investors .hero-investors-content {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-investors h1,
+.hero-investors h2,
+.hero-investors h3 {
+  color: #170f5f;
+}
+
+/* Eyebrow: uppercase, spaced, dark-translucent, with a hairline underline. */
+.hero-investors .hero-investors-eyebrow {
+  display: inline-block;
+  margin: 0 0 20px;
+  padding-bottom: 21px;
+  border-bottom: 1px solid rgb(0 0 0 / 30%);
+  color: rgb(0 0 0 / 55%);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 1.29px;
+  text-transform: uppercase;
+}
+
+/* Headline — 28px mobile / 52px desktop, navy, bold. */
+.hero-investors h2 {
+  margin: 0 0 15px;
+  max-width: 12ch;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+/* Intro paragraph. */
+.hero-investors .hero-investors-content > p {
+  margin: 0 0 16px;
+  max-width: 34ch;
+  color: rgb(0 0 0 / 77%);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Shared circled-arrow chip (blue #1010EB disc, white outline + arrow). */
+.hero-investors .hero-investors-cta a::after,
+.hero-investors .hero-investors-links a::after {
+  content: '';
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1010eb no-repeat center / 16px 16px;
+  box-shadow: inset 0 0 0 1.5px #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
+}
+
+/* Primary CTA: bold blue label + circled arrow. */
+.hero-investors .hero-investors-cta {
+  margin: 0;
+}
+
+.hero-investors .hero-investors-cta a:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #1010eb;
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+/* Secondary links: stacked, navy, divided by a hairline separator. */
+.hero-investors .hero-investors-links {
+  margin-top: 28px;
+}
+
+.hero-investors .hero-investors-links p {
+  margin: 0;
+}
+
+.hero-investors .hero-investors-links a:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 0;
+  color: #170f5f;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.hero-investors .hero-investors-links a:hover {
+  color: #4a7dff;
+}
+
+/* Fallback when no swirl image is authored. */
+.hero-investors.no-image {
+  background: linear-gradient(120deg, #eaeaea 0%, #d3d3d3 100%);
+}
+
+.hero-investors.no-image::after {
+  display: none;
+}
+
+@media (width >= 900px) {
+  .hero-investors {
+    min-height: 600px;
+    padding: 69px 50px 50px 70px;
+  }
+
+  /* Left content column, narrow like the source (max ~514px). */
+  .hero-investors .hero-investors-eyebrow,
+  .hero-investors h2,
+  .hero-investors .hero-investors-content > p,
+  .hero-investors .hero-investors-cta {
+    max-width: 514px;
+  }
+
+  .hero-investors h2 {
+    margin-top: 33px;
+    font-size: 52px;
+  }
+
+  .hero-investors .hero-investors-content > p {
+    font-size: 20px;
+  }
+
+  .hero-investors .hero-investors-cta {
+    margin-top: 16px;
+  }
+
+  /* Secondary links pinned to the content column's top-right. */
+  .hero-investors .hero-investors-links {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 260px;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .hero-investors .hero-investors-links a:any-link {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .hero-investors .hero-investors-links p:not(:last-child) a {
+    border-bottom: 1px solid rgb(0 0 0 / 55%);
+  }
+}
