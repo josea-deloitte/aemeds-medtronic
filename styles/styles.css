@@ -321,6 +321,14 @@ main > .section.hero-careers-container > div {
   padding: 0;
 }
 
+/* Full-bleed featured-story band: its inner wrapper carries no max-width/padding
+   (the block sets its own black background and inner content cap). */
+main > .section.hero-feature-container > div {
+  max-width: unset;
+  margin: 0;
+  padding: 0;
+}
+
 /* "Who we are" section (columns-media + cards-stat): full-bleed dark band with
    content capped at 1440px. position:relative anchors the stats info-bar that
    cards-stat.js overlays onto the media column. */
@@ -425,4 +433,14 @@ main > .section.hero-careers-container {
   max-width: unset;
   margin: 0;
   padding: 0;
+}
+
+/* Featured-story CTA band (hero-feature): a pure-black full-bleed band, no
+   surrounding gray padding — the source wrapper-cta-banner is solid black, not
+   the shared dark-gray #1e1e1e. Declared after ".section.dark" so it wins. */
+main > .section.hero-feature-container {
+  max-width: unset;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
 }
