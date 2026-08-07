@@ -1,6 +1,6 @@
 # Authoring Guide (da.live)
 
-This guide is for content editors authoring the Medtronic site in **da.live**. It covers the blocks reworked to match the original medtronic.com design: the global **header/navigation**, the **Cards Rail** ("Innovation in action" story rail), the **Cards Promo** featured card (white banner / navy Our-Impact card), and the **Hero Video** top-of-page hero.
+This guide is for content editors authoring the Medtronic site in **da.live**. It covers the blocks reworked to match the original medtronic.com design: the global **header/navigation**, the **Cards Rail** ("Innovation in action" story rail), the **Cards Promo** featured card (white banner / navy Our-Impact card), the **Hero Video** top-of-page hero, and the **Hero Feature** featured-story CTA band.
 
 ---
 
@@ -192,12 +192,55 @@ Preview and check both widths: `https://main--aemeds-medtronic--<org>.aem.page/e
 
 ---
 
+## 5. Hero Feature block (featured-story CTA band)
+
+### What it's for
+
+A wide, dark full-width **CTA band** promoting a single featured story: a category eyebrow and headline on the left, a short description, and a "Find out" link on the right. Used for the homepage "How a 1960s blueprint became tomorrow's health tech" band between the Who We Are and Our Impact sections.
+
+### Inserting the block
+
+1. Place your cursor where the band should go (its own section).
+2. Open **Insert → Block** and choose **Hero Feature**. The header row must read exactly **`Hero Feature`**.
+3. Apply the **`dark`** section style (see below) so the band gets its dark background.
+
+### Filling it in
+
+The block is a **single cell** containing, in order:
+
+| Order | Content |
+|---|---|
+| 1 | **Eyebrow** — a plain paragraph (e.g. `HEALTHCARE TECHNOLOGY`). Renders as a white label on a blue highlight with a hairline underline. |
+| 2 | **Headline** — a heading (`h2`) with the story title. |
+| 3 | **Description** — a plain paragraph, one sentence. |
+| 4 | **CTA link** — a single link (e.g. "Find out") on its own line. |
+
+- **First paragraph = eyebrow** (styled automatically — don't add the blue background yourself).
+- The layout is automatic: eyebrow + headline + copy sit on the **left**, the CTA is pinned to the **right** and vertically centered on desktop; everything stacks on mobile.
+- **CTA:** the blue circled-arrow icon is added automatically — just author the link text and URL.
+- **External links** (`https://…`) open in a new tab automatically.
+
+### Applying the dark section style
+
+The band needs the dark background:
+
+1. Click into the section containing the block.
+2. Insert a **Section Metadata** block at the end of the section.
+3. Set key `style` to `dark`.
+
+### Testing your change
+
+Preview and check both widths: `https://main--aemeds-medtronic--<org>.aem.page/en-us/`. The band should be a single dark row (text left, "Find out" right) on desktop and stacked on mobile.
+
+---
+
 ## Quick reference
 
 | Task | Where |
 |---|---|
 | Change logo, nav links, dropdowns, search/audience options | `/nav` fragment document |
 | Add a top-of-page video hero | Insert **Hero Video** block (row 1: `.mp4` URL link; row 2: eyebrow + heading + copy + cutout image + link) |
+| Add a dark featured-story CTA band | Insert **Hero Feature** block (eyebrow + heading + copy + link), apply `dark` section style |
 | Add a "latest stories" scroll rail | Insert **Cards Rail** block (2-column table: image, category+linked heading), preceded by eyebrow `<p>` + heading |
 | Add a featured promo (white banner or navy Our-Impact card) | Insert **Cards Promo** block (1 row, 2 cols: image, eyebrow+heading+copy+link); layout is chosen by section context |
 | Style a section light/dark | Insert **Section Metadata** block at the end of the section, key `style` |
