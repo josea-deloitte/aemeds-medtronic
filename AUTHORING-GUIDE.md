@@ -1,6 +1,6 @@
 # Authoring Guide (da.live)
 
-This guide is for content editors authoring the Medtronic site in **da.live**. It covers the blocks reworked to match the original medtronic.com design: the global **header/navigation**, the **Cards Rail** ("Innovation in action" story rail), and the **Cards Promo** featured card (white banner / navy Our-Impact card).
+This guide is for content editors authoring the Medtronic site in **da.live**. It covers the blocks reworked to match the original medtronic.com design: the global **header/navigation**, the **Cards Rail** ("Innovation in action" story rail), the **Cards Promo** featured card (white banner / navy Our-Impact card), and the **Hero Video** top-of-page hero.
 
 ---
 
@@ -153,11 +153,51 @@ Preview and check both widths: `https://main--aemeds-medtronic--<org>.aem.page/e
 
 ---
 
+## 4. Hero Video block
+
+### What it's for
+
+The top-of-page hero: a **full-bleed looping background video** with a light "card" floating over it. The card has an icon + category eyebrow, a large headline, a short paragraph, a foreground cutout image, and a "See how" link. Used for the homepage "Revolutionizing AFib treatment" hero.
+
+### Inserting the block
+
+1. Place your cursor at the very top of the page (the hero is normally the first section).
+2. Open **Insert → Block** and choose **Hero Video**. The header row must read exactly **`Hero Video`**.
+
+### Filling it in
+
+The block is a **2-row table** (each row is one cell of content):
+
+| Row | Cell contents |
+|---|---|
+| **Row 1 — background video** | A single link whose **text is the full `https://…​.mp4` URL** of the background video. (In da.live, paste the .mp4 URL as both the link text and target; the block reads the URL from the link text because the platform rewrites `.mp4` in the href.) Optionally add a poster image below the link — it shows as the first frame. |
+| **Row 2 — card content** | In order: the **category eyebrow** as a plain paragraph (e.g. `HEALTHCARE TECHNOLOGY`), the **headline** as a heading (`h2`), a short **paragraph** of copy, the **foreground image** (a cutout PNG on its own line), and the **"See how" link** on its own line. |
+
+- **The eyebrow icon is added automatically** — you only type the label text. (It's the Medtronic "healthcare" heart-in-hand mark; it's decorative.)
+- **First paragraph = eyebrow**, styled uppercase navy with a hairline underline automatically.
+- **Foreground image:** upload the cutout asset in da.live. It sits on the right of the card on desktop and moves above the text on mobile.
+- **CTA:** a single link ("See how"). The blue circled-arrow icon is added automatically — don't paste an SVG.
+- **External links** (`https://…`) open in a new tab automatically.
+
+### Notes / behavior
+
+- The video **autoplays muted and loops** (required for background video) and is lazily started when in view for performance.
+- If the video link is missing or invalid, the block still renders the card over the brand-blue gradient background (a safe fallback).
+- On mobile the card stacks (image above text) and the headline scales down.
+- Keep the copy short (one or two sentences) — the card is a hero, not an article.
+
+### Testing your change
+
+Preview and check both widths: `https://main--aemeds-medtronic--<org>.aem.page/en-us/`. Confirm the video plays behind the card on desktop and the layout stacks cleanly on mobile.
+
+---
+
 ## Quick reference
 
 | Task | Where |
 |---|---|
 | Change logo, nav links, dropdowns, search/audience options | `/nav` fragment document |
+| Add a top-of-page video hero | Insert **Hero Video** block (row 1: `.mp4` URL link; row 2: eyebrow + heading + copy + cutout image + link) |
 | Add a "latest stories" scroll rail | Insert **Cards Rail** block (2-column table: image, category+linked heading), preceded by eyebrow `<p>` + heading |
 | Add a featured promo (white banner or navy Our-Impact card) | Insert **Cards Promo** block (1 row, 2 cols: image, eyebrow+heading+copy+link); layout is chosen by section context |
 | Style a section light/dark | Insert **Section Metadata** block at the end of the section, key `style` |

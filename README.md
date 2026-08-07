@@ -15,7 +15,7 @@ Before using the aem-boilerplate, we recommand you to go through the documentati
 
 ## Authoring
 
-Content editors: see the **[Authoring Guide](AUTHORING-GUIDE.md)** for how to author the site's blocks in da.live — the header/navigation fragment, the Cards Rail story rail, and the Cards Promo featured card (white banner and navy Our-Impact card variants).
+Content editors: see the **[Authoring Guide](AUTHORING-GUIDE.md)** for how to author the site's blocks in da.live — the header/navigation fragment, the Hero Video top-of-page hero, the Cards Rail story rail, and the Cards Promo featured card (white banner and navy Our-Impact card variants).
 
 ## Installation
 
