@@ -27,13 +27,25 @@ export default function decorate(block) {
   const cards = [...ul.children];
   const onePerCard = cards.length >= 2 && cards.every((li) => li.querySelectorAll('a[href]').length === 1);
 
-  const section = block.closest('.section');
-  // The hero this tile row belongs to — strictly its OWN section, so the careers
-  // tiles and investor tiles each land on their respective hero (never the wrong one).
-  const hero = section && section.querySelector('.hero-careers, .hero-investors');
+  // The hero this tile row belongs to = the nearest hero-careers/hero-investors
+  // block in a PRECEDING wrapper. Walking back from this block's own wrapper (not
+  // just "any hero in the section") means careers tiles attach to the careers hero
+  // and investor tiles to the investors hero even when both sections were merged
+  // into one — each tile row is authored right after its own hero.
+  const wrapper = block.closest('.cards-tile-wrapper') || block;
+  let hero = null;
+  for (let sib = wrapper.previousElementSibling; sib && !hero; sib = sib.previousElementSibling) {
+    hero = sib.querySelector(':scope > .hero-investors, :scope > .hero-careers')
+      || (sib.matches('.hero-investors, .hero-careers') ? sib : null);
+  }
+  // Fallback: any not-yet-claimed hero in the same section.
+  if (!hero) {
+    const section = block.closest('.section');
+    hero = section && [...section.querySelectorAll('.hero-careers, .hero-investors')]
+      .find((h) => !h.querySelector('.cards-tile-tiles'));
+  }
 
   if (onePerCard && hero && !hero.querySelector('.cards-tile-tiles')) {
-    const wrapper = block.closest('.cards-tile-wrapper') || block;
     block.classList.add('cards-tile-tiles', 'cards-tile-tiles-overlay');
     hero.classList.add('has-tiles-overlay');
     hero.append(block);
