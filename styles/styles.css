@@ -88,8 +88,10 @@ body.appear {
   display: block;
 }
 
+/* The header overlays the first section (transparent nav over the hero), so it
+   reserves no layout height — its .nav-wrapper is absolutely positioned. */
 header {
-  height: var(--nav-height);
+  height: 0;
 }
 
 header .header,

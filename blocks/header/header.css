@@ -1,18 +1,22 @@
 /* =========================================================
- * Header — white bar matching the AEM original design.
- * Sits in normal document flow (not an overlay); text and
- * controls use dark colours; a subtle bottom shadow provides
- * depth against the page content below.
+ * Header — transparent bar overlaid on the hero video, matching
+ * the AEM original: the header sits ON TOP of the first section's
+ * gradient/video background with white logo, nav and icons. The
+ * search box stays a light pill. A hairline divider sits under
+ * the primary-nav row.
  * ========================================================= */
 
-/* Wrapper: white background, full width, bottom border. */
+/* Wrapper: transparent, overlaid on the page's first section. The header is a
+   body-level sibling before <main>, so it's pinned to the top and the first
+   section reserves top space via scripts/styles (see styles.css). */
 header .nav-wrapper {
-  background: #fff;
-  color: #1e1e1e;
+  background: transparent;
+  color: #fff;
   width: 100%;
-  border-bottom: 1px solid rgb(0 0 0 / 10%);
-  box-shadow: 0 2px 6px rgb(0 0 0 / 6%);
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
 }
 
@@ -56,7 +60,7 @@ header nav p {
 }
 
 header nav a:any-link {
-  color: #1e1e1e;
+  color: #fff;
 }
 
 /* hamburger (semantic <button>) */
@@ -144,6 +148,9 @@ header nav a.nav-brand {
 header nav a.nav-brand img {
   width: 150px;
   height: auto;
+
+  /* Dark brand SVG rendered white for the transparent header over the hero. */
+  filter: brightness(0) invert(1);
 }
 
 /* sections: primary navigation as a semantic <ul> */
@@ -161,16 +168,20 @@ header nav[aria-expanded='true'] ul.nav-sections {
   visibility: visible;
 }
 
+/* Top-level nav items are white on the transparent header; the chevron uses
+   currentcolor, so this also whitens it. */
 header nav ul.nav-sections > li {
   font-weight: 500;
-}
-
-header nav ul.nav-sections .nav-drop {
-  color: #1010eb;
+  color: #fff;
 }
 
 header nav ul.nav-sections > li > ul {
   margin-top: 0;
+}
+
+/* Flyout submenu panels are white cards, so their text is dark. */
+header nav ul.nav-sections .nav-drop > ul {
+  color: #1e1e1e;
 }
 
 header nav ul.nav-sections > li > ul > li {
@@ -258,12 +269,17 @@ header nav .nav-back-button {
 }
 
 @media (width >= 900px) {
-  header nav ul.nav-sections {
+  /* On desktop the primary nav is always a horizontal row — override the
+     drawer's [aria-expanded='true'] { display:block } with matching specificity. */
+  header nav ul.nav-sections,
+  header nav[aria-expanded='true'] ul.nav-sections {
     display: flex;
     visibility: visible;
     gap: 32px;
     white-space: nowrap;
-    margin-top: 4px;
+    margin-top: 8px;
+    padding-top: 14px;
+    border-top: 1px solid rgb(255 255 255 / 30%);
   }
 
   header nav .nav-back {
@@ -423,7 +439,7 @@ header nav .nav-tools .nav-search-icon::after {
 }
 
 header nav .nav-tools a:any-link {
-  color: #1e1e1e;
+  color: #fff;
   font-size: var(--body-font-size-xs);
   white-space: nowrap;
   display: inline-flex;
@@ -431,11 +447,11 @@ header nav .nav-tools a:any-link {
   gap: 6px;
 }
 
-/* utility icons (academy / location) rendered dark on the white header bar */
+/* utility icons (academy / location) rendered white on the transparent header */
 header nav .nav-tools .icon img {
   width: 20px;
   height: 20px;
-  filter: brightness(0);
+  filter: brightness(0) invert(1);
 }
 
 /* --- Region / language selector --- */
@@ -450,7 +466,7 @@ header nav .nav-region-trigger {
   gap: 6px;
   border: 0;
   background: transparent;
-  color: #1e1e1e;
+  color: #fff;
   font-size: var(--body-font-size-xs);
   cursor: pointer;
   white-space: nowrap;
@@ -459,7 +475,7 @@ header nav .nav-region-trigger {
 header nav .nav-region-trigger .icon img {
   width: 18px;
   height: 18px;
-  filter: brightness(0);
+  filter: brightness(0) invert(1);
 }
 
 header nav .nav-region-trigger::after {
@@ -522,10 +538,16 @@ header nav ul.nav-region-list a[aria-current='true'] {
   color: #1010eb;
 }
 
-/* Top-level primary nav links use the Medtronic blue (declared last so it does
-   not precede the lower-specificity :any-link rules above). */
+/* Top-level primary nav links are white on the transparent header (declared
+   last so it does not precede the lower-specificity :any-link rules above). */
 header nav ul.nav-sections > li > a:any-link {
-  color: #1010eb;
+  color: #fff;
+}
+
+/* Links inside an open flyout submenu sit on a white card → dark text.
+   Declared after the white top-level rule so it wins for nested links. */
+header nav ul.nav-sections .nav-drop > ul a:any-link {
+  color: #1e1e1e;
 }
 
 /* On mobile the search box drops into the drawer and stacks. */
